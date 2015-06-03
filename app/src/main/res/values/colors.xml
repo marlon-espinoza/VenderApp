@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="azul_theme">#0B0B61</color>
+    <color name="azul">#0066FF</color>
+    <color name="azul1">#08298A</color>
+    <color name="azul2">#0431B4</color>
+    <color name="azul3">#5858FA</color>
+    <color name="azul4">#CED8F6</color>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
+    android:clickable="true"
+    android:background="@drawable/selector_lista_sin_color"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/modelo"
+        android:gravity="center"
+        android:padding="5dp"
+        style="?android:textAppearanceMedium"
+        android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/areaconst"
+        android:gravity="center"
+        android:padding="5dp"
+        style="?android:textAppearanceMedium"
+        android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/pisos"
+        android:gravity="center"
+        android:padding="5dp"
+        style="?android:textAppearanceMedium"/>
+    <TextView
+        android:id="@+id/precio"
+        android:gravity="center"
+        android:padding="5dp"
+        style="?android:textAppearanceMedium"/>
+    <Button
+        android:id="@+id/botonFachada"
+        android:clickable="true"
+        android:focusable="true"
+        android:bottomRightRadius="5dp" android:bottomLeftRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp"
+        android:drawableBottom="@drawable/ic_fachada"
+        android:layout_width="50dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center_vertical" />
+</TableRow>

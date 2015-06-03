@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="200dp"
+    android:longClickable="false"
+    android:clickable="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal"
+        style="@style/nowCardStyle">
+        <TextView
+            android:id="@+id/nombre_urb"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="La Peninsula"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+        <RelativeLayout
+
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:background="@color/material_blue_grey_800">
+            <ImageView
+                android:id="@+id/img_urb"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

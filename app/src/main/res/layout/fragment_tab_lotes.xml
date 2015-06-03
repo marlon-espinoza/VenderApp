@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideInset"
+        android:layout_margin="10dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <TableLayout
+                    android:id="@+id/tablaLotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:textAppearanceMedium"
+                    android:layout_gravity="center"
+                    android:scrollbars="vertical"
+                    android:stretchColumns="6">
+                    <View android:layout_width="2dp"
+                        android:layout_height="match_parent"/>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp">
+                        <TextView
+                            android:text="Seleccione un lote"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:layout_span="6"
+                            android:background="#ff506fff" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:focusable="true">
+                        <TextView
+                            android:text="Mz"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="Lote"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="Plazo Entrada"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="Plazo Entrega"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="Área Terreno"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="Estado"
+                            android:gravity="center"
+                            android:padding="5dip"
+                            style="?android:textAppearanceMedium"
+                            android:textStyle="bold"/>
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <TextView android:id="@android:id/empty"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="32dp"
+        android:text="No hay lotes que mostrar"
+        android:textColor="?android:textColorSecondary" />
+
+</LinearLayout>
+
+

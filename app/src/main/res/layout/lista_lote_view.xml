@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:listPreferredItemHeightSmall"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    android:divider="?android:dividerVertical"
+    android:dividerPadding="8dp"
+    android:gravity="center"
+    android:id="@+id/lote">
+
+    <TextView
+        android:id="@+id/loteText"
+        style="?android:textAppearanceMedium"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent_material_light"
+        android:paddingLeft="?android:listPreferredItemPaddingLeft"/>
+
+</LinearLayout>
