@@ -77,12 +77,12 @@ public class Activity_Modelos extends ActionBarActivity {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
                     //String[] campos = new String[] {ID_MODELO,MODELO,AREA_CONST,PISOS,CUOTA_ENTRADA,CUOTA_INICIAL,TASA,PLAZO_1,
-                    //PLAZO_2,PLAZO_3,PRECIO};
+                    //PLAZO_2,PLAZO_3,PRECIO,IMAGEN_FACHADA,IMAGEN_PLANTA_BAJA,IMAGEN_PLANTA_ALTA_1,IMAGEN_PLANTA_ALTA_2};
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_modelo, null);
                     TextView tv;
                     Button btn;
                     final String id_modelo=dato.getString(0);
-                    final String[] nImagenes={dato.getString(12),dato.getString(13),dato.getString(14)};
+                    final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
                     final String nombre_modelo=dato.getString(1);
                     if(i%2==1)tr.setBackgroundResource(R.drawable.selector_lista_con_azul);
                     tv = (TextView) tr.findViewById(R.id.modelo);
