@@ -5,33 +5,30 @@
     android:id="@+id/popupFachadas"
     android:showDividers="end">
     <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <ImageView
-            android:id="@+id/img1"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:padding="5dp"
-            android:src="@drawable/arena_a_14fa"/>
-        <ImageView
-            android:id="@+id/img2"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:padding="5dp"
-            android:src="@drawable/ic_fachada"/>
-        <ImageView
-            android:id="@+id/img3"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:padding="5dp"
-            android:src="@drawable/ic_fachada"/>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <GridView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/GridLViewModelos"
+                android:gravity="center"
+                android:numColumns="2"
+                android:columnWidth="100dp"
+                android:horizontalSpacing="10dip"
+                android:stretchMode="spacingWidthUniform"
+                android:verticalSpacing="10dip">
+
+            </GridView>
+
+        </LinearLayout>
     </HorizontalScrollView>
 
 </LinearLayout>

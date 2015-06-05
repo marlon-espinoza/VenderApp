@@ -1,14 +1,23 @@
 package com.example.usuario.venderapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,21 +25,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbModelo;
+import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
+import com.example.usuario.venderapp.adapters.ImagenModeloAdapter;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Activity_Modelos extends ActionBarActivity {
     ArrayList<String[]> list;
     private String idLote;
+    String path=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +81,7 @@ public class Activity_Modelos extends ActionBarActivity {
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_modelo, null);
                     TextView tv;
                     Button btn;
+                    final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(12),dato.getString(13),dato.getString(14)};
                     final String nombre_modelo=dato.getString(1);
                     if(i%2==1)tr.setBackgroundResource(R.drawable.selector_lista_con_azul);
@@ -75,7 +101,7 @@ public class Activity_Modelos extends ActionBarActivity {
 
                         @Override
                         public void onClick(View v) {
-                            showPopupFachada(Activity_Modelos.this,nombre_modelo,nImagenes);
+                            showPopupFachada(Activity_Modelos.this,id_modelo,nombre_modelo,nImagenes);
                         }
                     });
                     registerForContextMenu(tr);
@@ -118,18 +144,23 @@ public class Activity_Modelos extends ActionBarActivity {
 
 
 
-    private void showPopupFachada(final Activity context,String nombre_modelo,String[]nombre_imagenes){
-        String url="http://200.93.200.156/sitio1/Imagenes/";
+    private void showPopupFachada(final Activity context,String id_modelo,String nombre_modelo,String[]nombre_imagenes){
+
         AlertDialog.Builder builder;
         final AlertDialog alertDialog;
-        int popupWidth=200;
-        int popupHeight=150;
         //inflate layout popup
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFachadas);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout=layoutInflater.inflate(R.layout.fachadas,viewGroup);
+        GridView grid=(GridView)layout.findViewById(R.id.GridLViewModelos);
+        ImagenModeloAdapter imgAdp;
+        ArrayList<String[]> list=new ArrayList<String[]>();
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[0],"fachada"});
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[1],"planta1"});
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[2],"planta2"});
 
-
+        imgAdp=new ImagenModeloAdapter(context,list);
+        grid.setAdapter(imgAdp);
 
         builder = new AlertDialog.Builder(context);
         builder.setView(layout);
@@ -150,17 +181,8 @@ public class Activity_Modelos extends ActionBarActivity {
         alertDialog = builder.create();
 
         alertDialog.show();
-        /*final PopupWindow popup=new PopupWindow(context);
-        popup.setContentView(layout);
-        popup.setHeight(popupHeight);
-        popup.setWidth(popupWidth);
-        popup.setFocusable(true);
-
-        int OFFSET_X=30;
-        int OFFSET_Y=30;
-
-        popup.showAtLocation(layout, Gravity.CENTER, OFFSET_X, OFFSET_Y);*/
 
 
     }
+
 }
