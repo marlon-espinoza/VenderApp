@@ -190,7 +190,6 @@ public class ImagenModeloAdapter extends BaseAdapter {
             } catch (IOException e) {
                 //Toast.makeText(getApplicationContext(),"Error cargando imagen"+e.getMessage(),Toast.LENGTH_LONG).show();
 
-                // TODO Auto-generated method stub
                 //Toast.makeText(context.getApplicationContext(), "No hay conexion", Toast.LENGTH_SHORT).show();
 
 
