@@ -63,11 +63,20 @@
         </activity>
         <activity
             android:name=".Visor.SingleTouchImageViewActivity"
-            android:label="Visor de Lote"
+            android:label="Visor de Urbanización"
             android:parentActivityName=".Activity_Lotes">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.usuario.venderapp.Activity_Lotes" />
+
+        </activity>
+        <activity
+            android:name=".Visor.ViewPagerActivity"
+            android:label="Visor de Modelos"
+            android:parentActivityName=".Activity_Modelos">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.usuario.venderapp.Activity_Modelos" />
 
         </activity>
     </application>

@@ -55,6 +55,9 @@ public class Activity_Modelos extends ActionBarActivity {
     ArrayList<String[]> list;
     private String idLote;
     String path=null;
+    String IMAGEN_1="fachada";
+    String IMAGEN_2="planta1";
+    String IMAGEN_3="planta2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,9 +158,9 @@ public class Activity_Modelos extends ActionBarActivity {
         GridView grid=(GridView)layout.findViewById(R.id.GridLViewModelos);
         ImagenModeloAdapter imgAdp;
         ArrayList<String[]> list=new ArrayList<String[]>();
-        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[0],"fachada"});
-        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[1],"planta1"});
-        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[2],"planta2"});
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[0],IMAGEN_1});
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[1],IMAGEN_2});
+        list.add(new String[]{id_modelo,nombre_modelo,nombre_imagenes[2],IMAGEN_3});
 
         imgAdp=new ImagenModeloAdapter(context,list);
         grid.setAdapter(imgAdp);

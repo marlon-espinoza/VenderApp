@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.usuario.venderapp.R;
 import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
+import com.example.usuario.venderapp.Visor.ViewPagerActivity;
+
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -43,6 +45,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String[]>Lista;
     private ImageView mImageView;
+    private String NOMBRE_MODELOS_FILE="ImagenesModelo";
 
     String path=null;
     String id_modelo,nombre_modelo,imagen_modelo,tipo_imagen;
@@ -91,10 +94,11 @@ public class ImagenModeloAdapter extends BaseAdapter {
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context.getApplicationContext(), SingleTouchImageViewActivity.class);
+                    Intent intent = new Intent(context.getApplicationContext(), ViewPagerActivity.class);
 
 
-                    intent.putExtra("ruta", path);
+                    intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
+                    intent.putExtra("index",tipo_imagen);
                     context.startActivity(intent);
 
                 }
@@ -133,7 +137,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
         protected Bitmap doInBackground(String... params) {
             Log.i("doInBackground", "Entra en background");
             String url = params[0];
-            Bitmap image;
+            final Bitmap image;
             image = downloadFile(url);
             //Después de descargar la imagen se la guarda en la memoria privada
             //y se asigna el listener sobre imageview para abrir el visor.
@@ -142,10 +146,10 @@ public class ImagenModeloAdapter extends BaseAdapter {
                 imgageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context.getApplicationContext(), SingleTouchImageViewActivity.class);
+                        Intent intent = new Intent(context.getApplicationContext(), ViewPagerActivity.class);
 
-
-                        intent.putExtra("ruta", path);
+                        intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
+                        intent.putExtra("index",tipo_imagen);
                         context.startActivity(intent);
 
                     }
@@ -235,7 +239,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
 
     private String guardarImagen (Context context, String id_modelo,String tipo_foto, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir("ImagenesModelo"+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, tipo_foto + ".png");
 
         FileOutputStream fos = null;
@@ -253,7 +257,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
     private String abrirImagen(Context context, String id_modelo,String tipo_foto, ImageView imageView){
         String proceso=null;
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir("ImagenesModelo"+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, tipo_foto + ".png");
         BufferedInputStream buf;
         FileInputStream fis;

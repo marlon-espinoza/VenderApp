@@ -36,12 +36,12 @@ public class SingleTouchImageViewActivity extends ActionBarActivity {
 
 		image = (TouchImageView) findViewById(R.id.img);
         //Captura el path donde esta alojada la imagen del lote
-        String myPaht= this.getIntent().getStringExtra("ruta");
+        String myPath= this.getIntent().getStringExtra("ruta");
         BufferedInputStream buf;
         FileInputStream fis;
         Bitmap bmp;
         try{
-            fis = new FileInputStream(myPaht);
+            fis = new FileInputStream(myPath);
             buf = new BufferedInputStream(fis);
             bmp = BitmapFactory.decodeStream(buf);
             image.setImageBitmap(bmp);
