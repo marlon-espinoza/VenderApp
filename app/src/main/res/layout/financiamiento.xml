@@ -36,8 +36,7 @@
                         android:text="29903.23"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editText"
-                        android:inputType="numberDecimal"/>
+                        android:id="@+id/precioFinanciamiento"/>
                 </TableRow>
                 </TableLayout>
                 </LinearLayout>
@@ -72,14 +71,14 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText2"
+                            android:id="@+id/entradra"
                             android:inputType="numberDecimal"
                             android:textStyle="normal"
                             />
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/editText3"
+                            android:id="@+id/porcentajeCuotaEntrada"
                             android:inputType="numberDecimal" />
                     </TableRow>
                     <TableRow>
@@ -88,13 +87,13 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText4"
+                            android:id="@+id/cuotaInicial"
                             android:inputType="numberDecimal"
                             />
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/editText5"
+                            android:id="@+id/porcentajeCuotaInicial"
                             android:inputType="numberDecimal"
                             />
                     </TableRow>
@@ -104,7 +103,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText6"
+                            android:id="@+id/pagos"
                             android:inputType="numberDecimal"
                             />
                     </TableRow>
@@ -115,7 +114,7 @@
                             android:text="29903.23"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText7"
+                            android:id="@+id/cuotaPagos"
                             android:inputType="numberDecimal"
                             android:layout_span="2"/>
                     </TableRow>
@@ -151,8 +150,7 @@
                             android:text="29903.23"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText8"
-                            android:inputType="numberDecimal"
+                            android:id="@+id/saldo"
                             />
                     </TableRow>
                     <TableRow>
@@ -161,7 +159,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText9"
+                            android:id="@+id/tasaInteres"
                             android:inputType="numberDecimal"
                              />
                     </TableRow>
@@ -172,8 +170,7 @@
                             android:text="29903.23"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText10"
-                            android:inputType="numberDecimal"
+                            android:id="@+id/cuota"
                             />
                     </TableRow>
                     <TableRow>
@@ -183,7 +180,7 @@
                             android:text=""
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText11"
+                            android:id="@+id/cliente"
                             android:layout_span="2"
                             />
                     </TableRow>

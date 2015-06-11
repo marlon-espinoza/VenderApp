@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -20,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.usuario.venderapp.DataBase.DbModelo;
+import com.example.usuario.venderapp.FrameLayout.Modelo;
 import com.example.usuario.venderapp.adapters.ImagenModeloAdapter;
 
 import java.text.DecimalFormat;
@@ -59,7 +61,10 @@ public class Activity_Modelos extends ActionBarActivity {
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_modelo, null);
                     TextView tv;
                     Button btn;
-                    final String[] modelo=new String[]{dato.getString(1),dato.getString(6),dato.getString(10)};
+                    final Modelo modelo=new Modelo(dato.getString(0),dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
+                            dato.getString(5),dato.getString(6),dato.getString(7),dato.getString(8),dato.getString(9),dato.getString(10),
+                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14));
+
                     final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
                     final String nombre_modelo=dato.getString(1);
@@ -128,7 +133,7 @@ public class Activity_Modelos extends ActionBarActivity {
     }
 
 
-    private  void mostrarFinanciamiento(final Activity context, String []modelo){
+    private  void mostrarFinanciamiento(final Activity context, Modelo modelo){
         AlertDialog.Builder builder;
         final AlertDialog alertDialog;
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
@@ -137,7 +142,10 @@ public class Activity_Modelos extends ActionBarActivity {
         builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         builder.setCancelable(true);
-        builder.setTitle(modelo[0]);
+        builder.setTitle(modelo.getNombre_modelo());
+        TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
+        tv.setText(modelo.getPrecio());
+        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
