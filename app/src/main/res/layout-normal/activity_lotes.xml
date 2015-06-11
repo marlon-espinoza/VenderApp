@@ -1,0 +1,217 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            >
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Arboleda"
+            android:layout_gravity="center"
+                android:textStyle="bold"
+            android:id="@+id/nombre_urbanizacion"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/abc_text_size_small_material" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            style="@style/nowCardStyle">
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_height="145dp"
+                android:layout_width="145dp"
+                android:contentDescription="imagen de Lote" />
+            <ProgressBar android:id="@+id/loading_spinner"
+                style="?android:progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/fallida"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Coneccion fallida"
+                android:visibility="gone"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideInset"
+        android:layout_margin="10dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical|horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TableLayout
+                android:id="@+id/tablaLotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:textAppearanceMedium"
+                android:scrollbars="vertical"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:background="#ff0066ff" >
+                    <TextView
+                        android:text="Seleccione un lote"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:layout_span="6"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/abc_text_size_title_material"
+                        android:background="#ff0066ff"
+                        android:textColor="#ffffffff" />
+
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:focusable="true">
+                    <TextView
+                        android:text="Mz"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="Lote"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="Entrada"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="Entrega"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="Área"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="Estado"
+                        android:gravity="center"
+                        android:padding="5dip"
+                        style="?android:textAppearanceMedium"
+                        android:textStyle="bold"/>
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView android:id="@android:id/empty"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="32dp"
+        android:text="No hay lotes que mostrar"
+        android:textColor="?android:textColorSecondary" />
+
+</LinearLayout>
+<!--
+<TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="5dp">
+            <TextView
+                android:text="Seleccione un lote"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"
+                android:layout_span="6"
+                android:background="#ff506fff" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:focusable="true">
+            <TextView
+                android:text="Mz"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"
+                />
+            <TextView
+                android:text="Lote"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"/>
+            <TextView
+                android:text="Plazo Entrada"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"/>
+            <TextView
+                android:text="Plazo Entrega"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"/>
+            <TextView
+                android:text="Área Terreno"
+                android:gravity="center"
+                android:padding="5dp"
+                style="?android:textAppearanceMedium"
+                />
+            <TextView
+                android:text="Estado"
+                android:gravity="center"
+                android:padding="5dip"
+                style="?android:textAppearanceMedium"/>
+
+        </TableRow>
+-->
+
