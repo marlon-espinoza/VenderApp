@@ -1,54 +1,29 @@
 package com.example.usuario.venderapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbModelo;
-import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
 import com.example.usuario.venderapp.adapters.ImagenModeloAdapter;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Activity_Modelos extends ActionBarActivity {
@@ -70,7 +45,7 @@ public class Activity_Modelos extends ActionBarActivity {
         DbModelo dbModelo = null;
         try {
             dbModelo = new DbModelo(this);
-            Cursor dato = dbModelo.consultar(idLote);
+            final Cursor dato = dbModelo.consultar(idLote);
             DecimalFormat decimales = new DecimalFormat("0.00");
             double valor;
 
@@ -84,6 +59,7 @@ public class Activity_Modelos extends ActionBarActivity {
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_modelo, null);
                     TextView tv;
                     Button btn;
+                    final String[] modelo=new String[]{dato.getString(1),dato.getString(6),dato.getString(10)};
                     final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
                     final String nombre_modelo=dato.getString(1);
@@ -104,7 +80,13 @@ public class Activity_Modelos extends ActionBarActivity {
 
                         @Override
                         public void onClick(View v) {
-                            showPopupFachada(Activity_Modelos.this,id_modelo,nombre_modelo,nImagenes);
+                            mostrarPopupModelos(Activity_Modelos.this, id_modelo, nombre_modelo, nImagenes);
+                        }
+                    });
+                    tr.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mostrarFinanciamiento(Activity_Modelos.this,modelo);
                         }
                     });
                     registerForContextMenu(tr);
@@ -146,13 +128,38 @@ public class Activity_Modelos extends ActionBarActivity {
     }
 
 
+    private  void mostrarFinanciamiento(final Activity context, String []modelo){
+        AlertDialog.Builder builder;
+        final AlertDialog alertDialog;
+        LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
+        LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout=layoutInflater.inflate(R.layout.financiamiento,viewGroup);
+        builder = new AlertDialog.Builder(context);
+        builder.setView(layout);
+        builder.setCancelable(true);
+        builder.setTitle(modelo[0]);
+        builder.setNegativeButton("CANCELAR",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.setPositiveButton("FINANCIAR",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-    private void showPopupFachada(final Activity context,String id_modelo,String nombre_modelo,String[]nombre_imagenes){
+                    }
+                });
+        alertDialog = builder.create();
+
+        alertDialog.show();
+    }
+    private void mostrarPopupModelos(final Activity context, String id_modelo, String nombre_modelo, String[] nombre_imagenes){
 
         AlertDialog.Builder builder;
         final AlertDialog alertDialog;
         //inflate layout popup
-        LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFachadas);
+        LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupModelos);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout=layoutInflater.inflate(R.layout.fachadas,viewGroup);
         GridView grid=(GridView)layout.findViewById(R.id.GridLViewModelos);

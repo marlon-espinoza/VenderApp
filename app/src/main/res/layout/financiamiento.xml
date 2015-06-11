@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/popupFinanciamiento"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideInset"
+        android:layout_margin="10dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical|horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/background_material_light">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*"
+                    android:padding="10dp">
+                <TableRow>
+                    <TextView
+                        android:text="Precio:"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:text="29903.23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText"
+                        android:inputType="numberDecimal"/>
+                </TableRow>
+                </TableLayout>
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:background="@color/common_signin_btn_dark_text_default">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Forma de pago de cuota de entrada"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_menu_material" />
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*"
+                    android:padding="10dp"
+                    >
+                    <TableRow>
+                        <TextView android:text="Entrada:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText2"
+                            android:inputType="numberDecimal"
+                            android:textStyle="normal"
+                            />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/editText3"
+                            android:inputType="numberDecimal" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Cuota Inicial:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText4"
+                            android:inputType="numberDecimal"
+                            />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/editText5"
+                            android:inputType="numberDecimal"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="No. de Pagos:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText6"
+                            android:inputType="numberDecimal"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Cuota:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="29903.23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText7"
+                            android:inputType="numberDecimal"
+                            android:layout_span="2"/>
+                    </TableRow>
+                    </TableLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:background="@color/common_signin_btn_dark_text_default">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Forma de pago del saldo"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:textSize="@dimen/abc_text_size_menu_material"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+                    <TableRow>
+                        <TextView android:text="Saldo:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="29903.23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText8"
+                            android:inputType="numberDecimal"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Tasa de Interes:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText9"
+                            android:inputType="numberDecimal"
+                             />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Valor de la cuota:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:text="29903.23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText10"
+                            android:inputType="numberDecimal"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Cliente:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText11"
+                            android:layout_span="2"
+                            />
+                    </TableRow>
+                </TableLayout>
+                </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
