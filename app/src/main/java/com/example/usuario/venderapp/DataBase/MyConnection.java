@@ -65,7 +65,6 @@ public class MyConnection {
             cs.setString(3,pass);
             cs.setInt(4,resultado);
             cs.execute();
-            System.out.println("Return:  "+resultado);
             System.out.println("Return2:  "+cs.getInt(1));
             resultado=cs.getInt(1);
             cs.close();

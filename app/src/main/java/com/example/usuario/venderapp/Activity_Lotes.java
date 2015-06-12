@@ -53,6 +53,7 @@ public class Activity_Lotes extends ActionBarActivity {
     private TextView fallido;
     private TextView nombreUrb;
     private String imageHttpAddress = "http://ciudadceleste.com/Apps/Images/arboleda.jpg";
+    private String IMAGENES_LOTES = "ImagenesLotes";
 
     private boolean mContentLoaded;
     private ImageView mImageView;
@@ -242,6 +243,7 @@ public class Activity_Lotes extends ActionBarActivity {
 
             try{
                 if(exists(imageHttpAddress)) {
+
                     URL imageUrl = new URL(imageHttpAddress);
                     HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
                     conn.connect();
@@ -297,7 +299,7 @@ public class Activity_Lotes extends ActionBarActivity {
     }
     private String guardarImagen (Context context, String nombre, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir("ImagenesLotes", Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(IMAGENES_LOTES, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, nombre + ".png");
 
         FileOutputStream fos = null;
@@ -315,7 +317,7 @@ public class Activity_Lotes extends ActionBarActivity {
     private String abrirImagen(Context context, String nombre, ImageView imageView){
         String proceso=null;
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir("ImagenesLotes", Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(IMAGENES_LOTES, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, nombre + ".png");
         BufferedInputStream buf;
         FileInputStream fis;

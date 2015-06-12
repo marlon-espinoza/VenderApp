@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,20 +91,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
             nT.execute(url + imagen_modelo);
         }
 
-        if(path!=null) {
-            mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context.getApplicationContext(), ViewPagerActivity.class);
 
-
-                    intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
-                    intent.putExtra("index",tipo_imagen);
-                    context.startActivity(intent);
-
-                }
-            });
-        }
         return convertView;
     }
     public class CargarImagenes extends AsyncTask<String,Void,Bitmap> {
@@ -239,7 +227,10 @@ public class ImagenModeloAdapter extends BaseAdapter {
 
     private String guardarImagen (Context context, String id_modelo,String tipo_foto, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(Environment.getExternalStorageDirectory()+NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
+        if(!dirImages.exists()){
+            dirImages.mkdir();
+        }
         File myPath = new File(dirImages, tipo_foto + ".png");
 
         FileOutputStream fos = null;
@@ -254,7 +245,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
         }
         return myPath.getAbsolutePath();
     }
-    private String abrirImagen(Context context, String id_modelo,String tipo_foto, ImageView imageView){
+    private String abrirImagen(final Context context, final String id_modelo, final String tipo_foto, ImageView imageView){
         String proceso=null;
         ContextWrapper cw = new ContextWrapper(context);
         File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
@@ -275,11 +266,26 @@ public class ImagenModeloAdapter extends BaseAdapter {
             if (buf != null) {
                 buf.close();
             }
+
         }catch (FileNotFoundException ex){
 
             ex.printStackTrace();
         }catch (IOException ex){
             ex.printStackTrace();
+        }
+        if(proceso!=null) {
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewPagerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
+                    intent.putExtra("index",tipo_foto);
+                    context.startActivity(intent);
+
+                }
+            });
         }
         return proceso;
     }

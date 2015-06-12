@@ -15,21 +15,18 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
-import com.example.usuario.venderapp.DataBase.DbUrbanizacion;
 import com.example.usuario.venderapp.DataBase.MyConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by USUARIO on 06-may-15.
@@ -51,6 +48,7 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     private String log_bool;
     private Button mButton;
+    private LinearLayout cargango;
     private boolean is_log=false;
 
     @Override
@@ -63,7 +61,8 @@ public class LoginActivity extends Activity {
         mProgress = (ProgressBar)findViewById(R.id.login_progress);
         mButton = (Button) findViewById(R.id.sign_in_button);
         mPassword = (EditText) findViewById(R.id.password);
-
+        cargango = (LinearLayout) findViewById(R.id.content_cargando);
+        cargango.setVisibility(View.GONE);
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -73,7 +72,7 @@ public class LoginActivity extends Activity {
                     String user = mUser.getText().toString();
                     String pass = mPassword.getText().toString();
 
-                    mAuthTask = new UserLoginTask(user, pass);
+                    mAuthTask = new UserLoginTask(user, pass, cargango);
                     mAuthTask.execute(user, pass);
 
 
@@ -101,7 +100,7 @@ public class LoginActivity extends Activity {
                     String pass = mPassword.getText().toString();
 
 
-                    mAuthTask = new UserLoginTask(user, pass);
+                    mAuthTask = new UserLoginTask(user, pass, cargango);
                     mAuthTask.execute(user, pass);
 
                 }
@@ -184,7 +183,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    public String login(String usuario,String pass) {
+    public String login(String usuario,String pass, final LinearLayout lMensaje) {
         MyConnection con = null;
         ResultSet rs = null;
         String bool="false";
@@ -198,17 +197,18 @@ public class LoginActivity extends Activity {
                 System.out.println("Tipo de error de inicio de sesion: "+log);
                 if(log==1){
                     bool="true";
-                    runOnUiThread(new Runnable(){
+                    runOnUiThread(new Runnable() {
 
                         @Override
-                        public void run(){
+                        public void run() {
                             //update ui here
                             Toast.makeText(getApplicationContext(), "Usuario identificado", Toast.LENGTH_LONG).show();
                             Toast.makeText(getApplicationContext(), "Estamos cargando tu información...", Toast.LENGTH_LONG).show();
-
+                            lMensaje.setVisibility(View.VISIBLE);
                         }
                     });
-                    getProyectos(con,usuario);
+                    getProyectos(con, usuario);
+
                 }
                 else bool="false";
             }
@@ -229,11 +229,13 @@ public class LoginActivity extends Activity {
 
         private final String mEmail;
         private final String mPassword;
+        private final LinearLayout mMensajeCargando;
 
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, LinearLayout mMensajeCargando) {
             mEmail = email;
             mPassword = password;
+            this.mMensajeCargando = mMensajeCargando;
         }
 
         @Override
@@ -241,7 +243,8 @@ public class LoginActivity extends Activity {
             is_log=true;
             mUser.setEnabled(false);
             LoginActivity.this.mPassword.setEnabled(false);
-            mButton.setText("Cancelar");
+            mButton.setClickable(false);
+            //mButton.setText("Cancelar");
         }
 
         @Override
@@ -249,7 +252,7 @@ public class LoginActivity extends Activity {
             // TODO: attempt authentication against a network service.
             mProgress.setProgress(0);
             log_bool = null;
-            log_bool = login(params[0], params[1]);
+            log_bool = login(params[0], params[1],mMensajeCargando);
             //log_bool="true";
             if(log_bool.equalsIgnoreCase("true"));
 
@@ -277,6 +280,7 @@ public class LoginActivity extends Activity {
             log_bool=result;
             attemptLogin();
             System.out.println("si termino");
+            cargango.setVisibility(View.GONE);
             if (log_bool.equalsIgnoreCase("true")) {
                 finish();
 
@@ -297,6 +301,7 @@ public class LoginActivity extends Activity {
             mButton.setText(getString(R.string.action_sign_in));
             mButton.setEnabled(true);
             is_log=false;
+            mMensajeCargando.setVisibility(View.GONE);
         }
     }
 
@@ -310,6 +315,8 @@ public class LoginActivity extends Activity {
         String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega "+
                 "from dbo.vw_lotes where codigo_urbanizacion='2'";
         String q_modelos="select * from dbo.vw_modelos_en_lot where codigo_lote='&PV_LOTE&'";
+
+
         try{
 
             if(con.getActive()) {

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
+
+import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -80,6 +83,7 @@ public class MainActivity extends ActionBarActivity {
             DbProyecto dbProyecto=new DbProyecto(this);
             dbProyecto.vaciar();
             //moveTaskToBack(true);
+            clearApplicationData();
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
             this.finish();
@@ -97,9 +101,37 @@ public class MainActivity extends ActionBarActivity {
         editor.commit();
 
         //moveTaskToBack(true);
+
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         this.finish();
+    }
+    public void clearApplicationData() {
+        File cache = getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")&&s.contentEquals("Imagenes")) {
+                    deleteDir(new File(appDir, s));
+                    Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
+                }
+            }
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+        return dir.delete();
     }
     public FragmentTabHost getMyTabHost(){
         return tabHost;

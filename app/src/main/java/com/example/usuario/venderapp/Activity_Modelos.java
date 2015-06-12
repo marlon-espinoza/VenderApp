@@ -61,9 +61,9 @@ public class Activity_Modelos extends ActionBarActivity {
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_modelo, null);
                     TextView tv;
                     Button btn;
-                    final Modelo modelo=new Modelo(dato.getString(0),dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
+                    final String[] modelo=new String[]{dato.getString(0),dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
                             dato.getString(5),dato.getString(6),dato.getString(7),dato.getString(8),dato.getString(9),dato.getString(10),
-                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14));
+                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14)};
 
                     final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
@@ -133,7 +133,7 @@ public class Activity_Modelos extends ActionBarActivity {
     }
 
 
-    private  void mostrarFinanciamiento(final Activity context, Modelo modelo){
+    private  void mostrarFinanciamiento(final Activity context, String[] modelo){
         AlertDialog.Builder builder;
         final AlertDialog alertDialog;
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
@@ -142,9 +142,9 @@ public class Activity_Modelos extends ActionBarActivity {
         builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         builder.setCancelable(true);
-        builder.setTitle(modelo.getNombre_modelo());
+        builder.setTitle(modelo[1]);
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
-        tv.setText(modelo.getPrecio());
+        tv.setText(modelo[9]);
         EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
