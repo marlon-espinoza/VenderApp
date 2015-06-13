@@ -133,19 +133,25 @@ public class Activity_Modelos extends ActionBarActivity {
     }
 
 
-    private  void mostrarFinanciamiento(final Activity context, String[] modelo){
+    private  void mostrarFinanciamiento(final Activity context, String[] sModelo){
         AlertDialog.Builder builder;
         final AlertDialog alertDialog;
+        final Modelo modelo=new Modelo(sModelo[0],sModelo[1],sModelo[2],sModelo[3],sModelo[4],
+                sModelo[5],sModelo[6],sModelo[7],sModelo[8],sModelo[9],sModelo[10],
+                sModelo[11],sModelo[12],sModelo[13],sModelo[14]);
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout=layoutInflater.inflate(R.layout.financiamiento,viewGroup);
         builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         builder.setCancelable(true);
-        builder.setTitle(modelo[1]);
+        builder.setTitle(modelo.getNombre_modelo());
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
-        tv.setText(modelo[9]);
-        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        tv.setText("$"+modelo.getPrecio());
+        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
+        editText.setText(""+modelo.getCuota_entrada());
+        editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        editText.setText(""+modelo.getCuota_inicial());
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

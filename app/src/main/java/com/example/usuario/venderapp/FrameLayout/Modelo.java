@@ -1,5 +1,8 @@
 package com.example.usuario.venderapp.FrameLayout;
 
+import java.text.DecimalFormat;
+import java.text.Format;
+
 /**
  * Created by USUARIO on 11-jun-15.
  */
@@ -19,6 +22,9 @@ public class Modelo {
     public static  String img_pb;
     public static  String img_pa_1;
     public static  String img_pa_2;
+    public static DecimalFormat decimales = new DecimalFormat("0.00");
+    public static DecimalFormat porcentajes = new DecimalFormat("##");
+
 
     public Modelo(String id,String modelo,String area,String pisos, String cuota_ent, String cuota_ini,
                   String tasa, String plazo1, String plazo2,String plazo3,
@@ -55,16 +61,19 @@ public class Modelo {
         return pisos;
     }
 
-    public static String getCuota_entrada() {
-        return cuota_entrada;
+    public static Integer getCuota_entrada() {
+        int val = (int)Double.parseDouble(cuota_entrada);
+        return val;
     }
 
-    public static String getCuota_inicial() {
-        return cuota_inicial;
+    public static Integer getCuota_inicial() {
+        int val=(int)Double.parseDouble(cuota_inicial);
+        return val;
     }
 
-    public static String getTasa() {
-        return tasa;
+    public static Integer getTasa() {
+        int val=(int)Double.parseDouble(tasa);
+        return val;
     }
 
     public static String getPlazo_1() {
@@ -80,7 +89,7 @@ public class Modelo {
     }
 
     public static String getPrecio() {
-        return precio;
+        return (String)decimales.format(Double.parseDouble(precio));
     }
 
     public static String getImg_fachada() {
