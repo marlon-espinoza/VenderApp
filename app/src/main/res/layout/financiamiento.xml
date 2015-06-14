@@ -31,12 +31,26 @@
                     <TextView
                         android:text="Precio:"
                         android:textStyle="bold"/>
-
-                    <TextView
-                        android:text="29903.23"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/precioFinanciamiento"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="$ "
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:textColor="@color/azul3"/>
+                        <TextView
+                            android:text="29903.23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/precioFinanciamiento"/>
+
+                    </LinearLayout>
+
+
                 </TableRow>
                 </TableLayout>
                 </LinearLayout>
@@ -65,39 +79,97 @@
                     android:stretchColumns="*"
                     android:padding="10dp"
                     >
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="10dp">
                         <TextView android:text="Entrada:"
                             android:textStyle="bold"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/entradra"
-                            android:inputType="numberDecimal"
-                            android:textStyle="normal"
-                            />
-                        <EditText
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/porcentajeCuotaEntrada"
-                            android:inputType="numberDecimal" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <EditText
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/entradra"
+                                android:inputType="numberDecimal"
+                                android:textStyle="normal"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/porcentajeCuotaEntrada"
+                                android:inputType="numberDecimal" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
+
                     </TableRow>
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        >
                         <TextView android:text="Cuota Inicial:"
                             android:textStyle="bold"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cuotaInicial"
-                            android:inputType="numberDecimal"
-                            />
-                        <EditText
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/porcentajeCuotaInicial"
-                            android:inputType="numberDecimal"
-                            />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <EditText
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cuotaInicial"
+                                android:inputType="numberDecimal"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/porcentajeCuotaInicial"
+                                android:inputType="numberDecimal"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
+
                     </TableRow>
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="10dp">
                         <TextView android:text="No. de Pagos:"
                             android:textStyle="bold"/>
                         <EditText
@@ -110,13 +182,26 @@
                     <TableRow>
                         <TextView android:text="Cuota:"
                             android:textStyle="bold"/>
-                        <TextView
-                            android:text="29903.23"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cuotaPagos"
-                            android:inputType="numberDecimal"
-                            android:layout_span="2"/>
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cuotaPagos"
+                                android:inputType="numberDecimal"
+                                android:layout_span="2"/>
+                        </LinearLayout>
+
                     </TableRow>
                     </TableLayout>
             </LinearLayout>
@@ -143,35 +228,78 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:stretchColumns="*">
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="10dp">
                         <TextView android:text="Saldo:"
                             android:textStyle="bold"/>
-                        <TextView
-                            android:text="29903.23"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/saldo"
-                            />
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/saldoPagos"
+                                android:inputType="numberDecimal"
+                                android:layout_span="2"/>
+
+                        </LinearLayout>
                     </TableRow>
-                    <TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="10dp">
                         <TextView android:text="Tasa de Interes:"
                             android:textStyle="bold"/>
-                        <EditText
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tasaInteres"
-                            android:inputType="numberDecimal"
-                             />
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tasaInteres"
+                                android:inputType="numberDecimal"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Valor de la cuota:"
                             android:textStyle="bold"/>
-                        <TextView
-                            android:text="29903.23"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cuota"
-                            />
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cuota"
+                                />
+
+                        </LinearLayout>
+
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Cliente:"
