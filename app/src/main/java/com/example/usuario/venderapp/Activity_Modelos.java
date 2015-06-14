@@ -149,9 +149,9 @@ public class Activity_Modelos extends ActionBarActivity {
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
         tv.setText(modelo.getPrecio());
         EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
-        editText.setText(modelo.getCuota_entrada());
+        editText.setText(""+modelo.getCuota_entrada());
         editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
-        editText.setText(modelo.getCuota_inicial());
+        editText.setText(""+modelo.getCuota_inicial());
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

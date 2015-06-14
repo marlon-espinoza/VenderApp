@@ -27,33 +27,33 @@
                     android:layout_height="match_parent"
                     android:stretchColumns="*"
                     android:padding="10dp">
-                <TableRow>
-                    <TextView
-                        android:text="Precio:"
-                        android:textStyle="bold"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                    <TableRow>
                         <TextView
+                            android:text="Precio:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="$ "
-                            android:textStyle="bold"
-                            android:textSize="15dp"
-                            android:textColor="@color/azul3"/>
-                        <TextView
-                            android:text="29903.23"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/precioFinanciamiento"/>
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/precioFinanciamiento"/>
 
-                    </LinearLayout>
+                        </LinearLayout>
 
 
-                </TableRow>
+                    </TableRow>
                 </TableLayout>
-                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:gravity="center_horizontal"
                     android:textStyle="bold"
                     android:textSize="@dimen/abc_text_size_menu_material" />
-                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,12 +80,13 @@
                     android:padding="10dp"
                     >
                     <TableRow android:layout_height="wrap_content"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="5dp"
+                        android:paddingTop="15dp">
                         <TextView android:text="Entrada:"
                             android:textStyle="bold"/>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
@@ -103,8 +104,8 @@
                                 />
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <EditText
@@ -124,13 +125,13 @@
 
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
-                        android:paddingBottom="10dp"
+                        android:paddingBottom="5dp" android:paddingTop="15dp"
                         >
                         <TextView android:text="Cuota Inicial:"
                             android:textStyle="bold"/>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
@@ -141,15 +142,15 @@
                                 android:textColor="@color/azul3"/>
                             <EditText
                                 android:layout_width="100dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="fill_parent"
                                 android:id="@+id/cuotaInicial"
                                 android:inputType="numberDecimal"
-                                />
+                                android:layout_gravity="center_vertical" />
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <EditText
                                 android:layout_width="50dp"
@@ -169,7 +170,7 @@
 
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="5dp" android:paddingTop="5dp">
                         <TextView android:text="No. de Pagos:"
                             android:textStyle="bold"/>
                         <EditText
@@ -203,7 +204,7 @@
                         </LinearLayout>
 
                     </TableRow>
-                    </TableLayout>
+                </TableLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,7 +230,7 @@
                     android:layout_height="match_parent"
                     android:stretchColumns="*">
                     <TableRow android:layout_height="wrap_content"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="5dp" android:paddingTop="15dp">
                         <TextView android:text="Saldo:"
                             android:textStyle="bold"/>
                         <LinearLayout
@@ -254,12 +255,12 @@
                         </LinearLayout>
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="5dp" android:paddingTop="15dp">
                         <TextView android:text="Tasa de Interes:"
                             android:textStyle="bold"/>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <EditText
                                 android:layout_width="50dp"
@@ -313,7 +314,7 @@
                             />
                     </TableRow>
                 </TableLayout>
-                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
