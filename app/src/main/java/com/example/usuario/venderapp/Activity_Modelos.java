@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -148,10 +149,8 @@ public class Activity_Modelos extends ActionBarActivity {
         builder.setTitle(modelo.getNombre_modelo());
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
         tv.setText(modelo.getPrecio());
-        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
-        editText.setText(""+modelo.getCuota_entrada());
-        editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
-        editText.setText(""+modelo.getCuota_inicial());
+        inicializarCampos(modelo,layout);
+
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -208,5 +207,42 @@ public class Activity_Modelos extends ActionBarActivity {
 
 
     }
+    void inicializarCampos(Modelo modelo, View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+        double precio=Double.parseDouble(modelo.getPrecio());
+        double entrada =(Double) precio*modelo.getCuota_entrada()/100;
+        double valor_cuota;
+        double cuota_inicial;
+        int numPagos=120;
+        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
+        editText.setText(""+modelo.getCuota_entrada());
+        editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        editText.setText(""+modelo.getCuota_inicial());
+        editText=(EditText)layout.findViewById(R.id.tasaInteres);
+        editText.setText(""+modelo.getTasa());
+        editText=(EditText)layout.findViewById(R.id.numeroPagos);
+        editText.setText(""+numPagos);
+        editText=(EditText)layout.findViewById(R.id.entradra);
+        editText.setText((String)decimales.format(entrada));
+        editText=(EditText)layout.findViewById(R.id.cuotaInicial);
+        cuota_inicial=(Double)precio*modelo.getCuota_inicial()/100;
+        editText.setText((String)decimales.format(cuota_inicial));
+        TextView textView=(TextView)layout.findViewById(R.id.cuotaEntrada);
+        textView.setText((String)decimales.format(cuota_inicial/numPagos));
+        double cuota_ini=Double.parseDouble(editText.getText().toString());
+        textView=(TextView)layout.findViewById(R.id.saldoPagos);
+        textView.setText((String)decimales.format(cuota_ini/numPagos));
+        Double saldo=(Double)(precio-entrada);
+        textView.setText((String)decimales.format(saldo));
+        valor_cuota=(Double)(saldo*modelo.getTasa()/100);
+        textView=(TextView)layout.findViewById(R.id.cuotaSaldo);
+        textView.setText((String)decimales.format(valor_cuota));
+
+
+    }
+    void calcularFinanciamiento(Modelo modelo, View layout){
+
+    }
+
 
 }

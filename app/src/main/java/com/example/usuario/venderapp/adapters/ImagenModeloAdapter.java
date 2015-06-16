@@ -227,7 +227,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
 
     private String guardarImagen (Context context, String id_modelo,String tipo_foto, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir(Environment.getExternalStorageDirectory()+NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
         if(!dirImages.exists()){
             dirImages.mkdir();
         }
