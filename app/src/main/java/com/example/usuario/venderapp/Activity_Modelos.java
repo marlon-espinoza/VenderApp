@@ -9,10 +9,13 @@ import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -142,7 +145,7 @@ public class Activity_Modelos extends ActionBarActivity {
                 sModelo[11],sModelo[12],sModelo[13],sModelo[14]);
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout=layoutInflater.inflate(R.layout.financiamiento,viewGroup);
+        final View layout=layoutInflater.inflate(R.layout.financiamiento,viewGroup);
         builder = new AlertDialog.Builder(context);
         builder.setView(layout);
         builder.setCancelable(true);
@@ -150,6 +153,17 @@ public class Activity_Modelos extends ActionBarActivity {
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
         tv.setText(modelo.getPrecio());
         inicializarCampos(modelo,layout);
+        final EditText editTextCliente = (EditText)layout.findViewById(R.id.cliente);
+        editTextCliente.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(editTextCliente.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
 
         builder.setNegativeButton("CANCELAR",
                 new DialogInterface.OnClickListener() {
@@ -160,7 +174,6 @@ public class Activity_Modelos extends ActionBarActivity {
         builder.setPositiveButton("FINANCIAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
                     }
                 });
         alertDialog = builder.create();
@@ -207,40 +220,166 @@ public class Activity_Modelos extends ActionBarActivity {
 
 
     }
-    void inicializarCampos(Modelo modelo, View layout){
+    void inicializarCampos(final Modelo modelo, final View layout){
         DecimalFormat decimales = new DecimalFormat("0.00");
-        double precio=Double.parseDouble(modelo.getPrecio());
+        final double precio=Double.parseDouble(modelo.getPrecio());
         double entrada =(Double) precio*modelo.getCuota_entrada()/100;
         double valor_cuota;
         double cuota_inicial;
-        int numPagos=120;
-        EditText editText=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
-        editText.setText(""+modelo.getCuota_entrada());
-        editText=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
-        editText.setText(""+modelo.getCuota_inicial());
+        int numPagosSaldo=120;
+        int numPagosEntrada=8;
+        EditText editText;
+        EditText campo_porcentaje_entrada=(EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
+        campo_porcentaje_entrada.setText(decimales.format(modelo.getCuota_entrada()));
+        campo_porcentaje_entrada.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus==false)
+                    editarPorcentajeEntrada(precio, layout);
+            }
+        });
+
+        EditText porcentajeCuotaInicial=(EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        porcentajeCuotaInicial.setText(decimales.format(modelo.getCuota_inicial()));
+        porcentajeCuotaInicial.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus==false)
+                    editarPorcentajeCuotaInicial(precio,layout);
+            }
+        });
+        EditText campo_numero_pago_entrada=(EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        campo_numero_pago_entrada.setText(""+numPagosEntrada);
+        campo_numero_pago_entrada.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == false)
+                    editarNumeroPagos(precio, layout);
+            }
+        });
         editText=(EditText)layout.findViewById(R.id.tasaInteres);
         editText.setText(""+modelo.getTasa());
-        editText=(EditText)layout.findViewById(R.id.numeroPagos);
-        editText.setText(""+numPagos);
-        editText=(EditText)layout.findViewById(R.id.entradra);
-        editText.setText((String)decimales.format(entrada));
-        editText=(EditText)layout.findViewById(R.id.cuotaInicial);
+        EditText campo_numeros_pagos_saldo=(EditText)layout.findViewById(R.id.numeroPagosSaldo);
+        campo_numeros_pagos_saldo.setText("" + numPagosSaldo);
+        EditText campo_entrada=(EditText)layout.findViewById(R.id.entradra);
+        campo_entrada.setText((String)decimales.format(entrada));
+        campo_entrada.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus==false)
+                editarEntrada(precio,layout);
+            }
+        });
+        EditText edCuotaInicial=(EditText)layout.findViewById(R.id.cuotaInicial);
         cuota_inicial=(Double)precio*modelo.getCuota_inicial()/100;
-        editText.setText((String)decimales.format(cuota_inicial));
+        edCuotaInicial.setText((String)decimales.format(cuota_inicial));
+        edCuotaInicial.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus==false)
+                    editarCuotaInicial(precio,layout);
+            }
+        });
         TextView textView=(TextView)layout.findViewById(R.id.cuotaEntrada);
-        textView.setText((String)decimales.format(cuota_inicial/numPagos));
+        textView.setText((String)decimales.format((entrada-cuota_inicial)/numPagosEntrada));
         double cuota_ini=Double.parseDouble(editText.getText().toString());
         textView=(TextView)layout.findViewById(R.id.saldoPagos);
-        textView.setText((String)decimales.format(cuota_ini/numPagos));
+        textView.setText((String)decimales.format(cuota_ini/numPagosSaldo));
         Double saldo=(Double)(precio-entrada);
         textView.setText((String)decimales.format(saldo));
         valor_cuota=(Double)(saldo*modelo.getTasa()/100);
+
         textView=(TextView)layout.findViewById(R.id.cuotaSaldo);
         textView.setText((String)decimales.format(valor_cuota));
 
 
     }
-    void calcularFinanciamiento(Modelo modelo, View layout){
+    void editarEntrada(Double precio, View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+
+        EditText editTextEntrada = (EditText)layout.findViewById(R.id.entradra);
+        EditText editTextPorcentajeCuotaEntrada = (EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
+        TextView textViewSaldo = (TextView)layout.findViewById(R.id.saldoPagos);
+        TextView textViewCuotaEntrada = (TextView) layout.findViewById(R.id.cuotaEntrada);
+        TextView textViewCuotaInicial = (TextView) layout.findViewById(R.id.cuotaInicial);
+        EditText editTextNumeroPagos = (EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        double entrada=Double.parseDouble(editTextEntrada.getText().toString());
+        double cuotaInicial=Double.parseDouble(textViewCuotaInicial.getText().toString());
+        double porcentaje_entrada=(entrada/precio)*100;
+        editTextPorcentajeCuotaEntrada.setText(decimales.format(porcentaje_entrada));
+        double saldo=precio-entrada;
+        int numeroPagos = Integer.parseInt(editTextNumeroPagos.getText().toString());
+        double cuotaEntrada=(entrada-cuotaInicial)/numeroPagos;
+        textViewCuotaEntrada.setText(decimales.format(cuotaEntrada));
+        textViewSaldo.setText((String) decimales.format(saldo));
+        //double valor_cuota;
+    }
+    void editarPorcentajeEntrada(Double precio,View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+
+        EditText editTextEntrada = (EditText)layout.findViewById(R.id.entradra);
+        EditText editTextPorcentajeCuotaEntrada = (EditText)layout.findViewById(R.id.porcentajeCuotaEntrada);
+        TextView textViewCuotaEntrada = (TextView) layout.findViewById(R.id.cuotaEntrada);
+        TextView textViewCuotaInicial = (TextView) layout.findViewById(R.id.cuotaInicial);
+        EditText editTextNumeroPagos = (EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        TextView textViewSaldo = (TextView)layout.findViewById(R.id.saldoPagos);
+        double cuotaInicial=Double.parseDouble(textViewCuotaInicial.getText().toString());
+        double porcentajeEntrada=Double.parseDouble(editTextPorcentajeCuotaEntrada.getText().toString());
+        double entrada=(porcentajeEntrada*precio)/100;
+        editTextEntrada.setText(decimales.format(entrada));
+        double saldo=precio-entrada;
+        int numeroPagos = Integer.parseInt(editTextNumeroPagos.getText().toString());
+        double cuotaEntrada=(entrada-cuotaInicial)/numeroPagos;
+        textViewCuotaEntrada.setText(decimales.format(cuotaEntrada));
+        textViewSaldo.setText((String) decimales.format(saldo));
+    }
+    void editarCuotaInicial(Double precio,View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+
+        EditText editTextCuotaInicial = (EditText)layout.findViewById(R.id.cuotaInicial);
+        EditText editTextPorcentajeCuotaInicial = (EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        EditText editTextEntrada = (EditText)layout.findViewById(R.id.entradra);
+        TextView textViewCuotaEntrada = (TextView)layout.findViewById(R.id.cuotaEntrada);
+        EditText editTextNumeroPagos = (EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        double entrada= Double.parseDouble(editTextEntrada.getText().toString());
+        double numeroPagos = Double.parseDouble(editTextNumeroPagos.getText().toString());
+        double cuotaInicial=Double.parseDouble(editTextCuotaInicial.getText().toString());
+        double cuota=(entrada-cuotaInicial)/numeroPagos;
+        double porcentajeCuotaInicial=(cuotaInicial/precio)*100;
+        editTextPorcentajeCuotaInicial.setText(decimales.format(porcentajeCuotaInicial));
+        textViewCuotaEntrada.setText(decimales.format(cuota));
+
+    }
+    void editarPorcentajeCuotaInicial(Double precio,View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+
+        EditText editTextCuotaInicial = (EditText)layout.findViewById(R.id.cuotaInicial);
+        EditText editTextPorcentajeCuotaInicial = (EditText)layout.findViewById(R.id.porcentajeCuotaInicial);
+        EditText editTextEntrada = (EditText)layout.findViewById(R.id.entradra);
+        TextView textViewCuotaEntrada = (TextView)layout.findViewById(R.id.cuotaEntrada);
+        EditText editTextNumeroPagos = (EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        double entrada= Double.parseDouble(editTextEntrada.getText().toString());
+        double numeroPagos = Double.parseDouble(editTextNumeroPagos.getText().toString());
+        double porcentajeCuotaInicial=Double.parseDouble(editTextPorcentajeCuotaInicial.getText().toString());
+
+        double cuotaInicial=(precio*porcentajeCuotaInicial)/100;
+        //double cuota=cuotaInicial/numeroPagos;
+        double cuota=(entrada-cuotaInicial)/numeroPagos;
+        editTextCuotaInicial.setText(decimales.format(cuotaInicial));
+        textViewCuotaEntrada.setText(decimales.format(cuota));
+    }
+    void editarNumeroPagos(Double precio,View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+
+        EditText editTextEntrada = (EditText)layout.findViewById(R.id.entradra);
+        EditText editTextCuotaInicial = (EditText)layout.findViewById(R.id.cuotaInicial);
+        EditText editTextNumeroPagos = (EditText)layout.findViewById(R.id.numeroPagosEntrada);
+        TextView textViewCuotaEntrada = (TextView)layout.findViewById(R.id.cuotaEntrada);
+        double entrada= Double.parseDouble(editTextEntrada.getText().toString());
+        double numeroPagos = Double.parseDouble(editTextNumeroPagos.getText().toString());
+        double cuotaInicial=Double.parseDouble(editTextCuotaInicial.getText().toString());
+        double cuota = (entrada-cuotaInicial)/numeroPagos;
+        textViewCuotaEntrada.setText(decimales.format(cuota));
 
     }
 

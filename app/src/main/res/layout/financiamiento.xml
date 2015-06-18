@@ -101,6 +101,7 @@
                                 android:id="@+id/entradra"
                                 android:inputType="numberDecimal"
                                 android:textStyle="normal"
+                                android:maxLength="9"
                                 />
                         </LinearLayout>
                         <LinearLayout
@@ -113,8 +114,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/porcentajeCuotaEntrada"
                                 android:inputType="numberDecimal"
-                                android:maxLength="2"
-                                android:digits="0123456789"/>
+                                android:maxLength="6"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -159,8 +159,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/porcentajeCuotaInicial"
                                 android:inputType="numberDecimal"
-                                android:maxLength="2"
-                                android:digits="0123456789"
+                                android:maxLength="6"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -180,10 +179,10 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/numeroPagos"
-                            android:inputType="numberDecimal"
-                            android:maxLength="3"
-                            android:digits="0123456789"
+                            android:id="@+id/numeroPagosEntrada"
+                            android:numeric="integer"
+                            android:inputType="number"
+                            android:maxLength="2"
                             />
                     </TableRow>
                     <TableRow>
@@ -274,7 +273,6 @@
                                 android:id="@+id/tasaInteres"
                                 android:inputType="numberDecimal"
                                 android:maxLength="2"
-                                android:digits="0123456789"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -285,6 +283,19 @@
                                 android:textColor="@color/azul3"/>
                         </LinearLayout>
 
+                    </TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="5dp">
+                        <TextView android:text="No. de Pagos:"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/numeroPagosSaldo"
+                            android:numeric="integer"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            />
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Valor de la cuota:"
@@ -314,11 +325,13 @@
                         <TextView android:text="Cliente:"
                             android:textStyle="bold"/>
                         <EditText
-                            android:text=""
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/cliente"
                             android:layout_span="2"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:maxLength="25"
                             />
                     </TableRow>
                 </TableLayout>
