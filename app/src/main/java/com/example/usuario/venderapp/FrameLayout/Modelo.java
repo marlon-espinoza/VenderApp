@@ -76,16 +76,16 @@ public class Modelo {
         return val;
     }
 
-    public static String getPlazo_1() {
-        return plazo_1;
+    public static int getPlazo_1() {
+        return Integer.parseInt(plazo_1);
     }
 
-    public static String getPlazo_2() {
-        return plazo_2;
+    public static int getPlazo_2() {
+        return Integer.parseInt(plazo_2);
     }
 
-    public static String getPlazo_3() {
-        return plazo_3;
+    public static int getPlazo_3() {
+        return Integer.parseInt(plazo_3);
     }
 
     public static String getPrecio() {

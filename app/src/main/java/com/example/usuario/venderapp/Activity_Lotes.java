@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /*
@@ -106,6 +107,7 @@ public class Activity_Lotes extends ActionBarActivity {
         try {
             dbLote = new DbLote(this);
             Cursor dato = dbLote.consultarLotePorProy(id);
+            final String urbanizacion=intent.getStringExtra("nombre_urb");
 
             if (dato.moveToFirst()) {
                 findViewById(android.R.id.empty).setVisibility(View.GONE);
@@ -113,19 +115,23 @@ public class Activity_Lotes extends ActionBarActivity {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
                     final TableRow tr = (TableRow) getLayoutInflater().inflate(R.layout.table_row_lote, null);
+                    DecimalFormat decimales = new DecimalFormat("0.00");
                     final String idLote=dato.getString(0);
+                    final String manzana=dato.getString(1);
+                    final String lote=dato.getString(2);
+                    final String area=decimales.format(Double.parseDouble(dato.getString(5)));
                     TextView tv;
                     if(i%2==1)tr.setBackgroundResource(R.drawable.selector_lista_con_azul);
                     tv = (TextView) tr.findViewById(R.id.mz);
-                    tv.setText(dato.getString(1));
+                    tv.setText(manzana);
                     tv = (TextView) tr.findViewById(R.id.lt);
-                    tv.setText(dato.getString(2));
+                    tv.setText(lote);
                     tv = (TextView) tr.findViewById(R.id.plazoEntrada);
                     tv.setText(dato.getString(3));
                     tv = (TextView) tr.findViewById(R.id.plazoEntrega);
                     tv.setText(dato.getString(4));
                     tv = (TextView) tr.findViewById(R.id.area);
-                    tv.setText(dato.getString(5));
+                    tv.setText(area);
                     tv = (TextView) tr.findViewById(R.id.estado);
                     tv.setText(dato.getString(6));
                     tb.addView(tr);
@@ -135,6 +141,9 @@ public class Activity_Lotes extends ActionBarActivity {
                         public void onClick(View v) {
                             Intent intent = new Intent(getApplicationContext(), Activity_Modelos.class);
                             intent.putExtra("id_lote", idLote);
+                            intent.putExtra("manzana",manzana);
+                            intent.putExtra("lote",lote);
+                            intent.putExtra("urbanizacion",urbanizacion);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             getApplicationContext().startActivity(intent);                       }
                     });

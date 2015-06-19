@@ -31,6 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbProyecto.CREATE_TABLE);
         db.execSQL(DbLote.CREATE_TABLE);
         db.execSQL(DbModelo.CREATE_TABLE);
+        db.execSQL(DbFinanciamiento.CREATE_TABLE);
 
     }
 
