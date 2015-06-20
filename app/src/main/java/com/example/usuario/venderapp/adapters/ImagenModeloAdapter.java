@@ -84,7 +84,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
         }
         mImageView=(ImageView)convertView.findViewById(R.id.imgModelo);
         convertView.findViewById(R.id.loading_spinner_modelo).setVisibility(View.GONE);
-        path=abrirImagen(context.getApplicationContext(),id_modelo,tipo_imagen,mImageView);
+        path=abrirImagen(context.getApplicationContext(),nombre_modelo,tipo_imagen,mImageView);
         if(path==null) {
             //mLoadingView.setVisibility(View.VISIBLE);
             CargarImagenes nT = new CargarImagenes(mImageView,tipo_imagen,convertView);
@@ -130,13 +130,13 @@ public class ImagenModeloAdapter extends BaseAdapter {
             //Después de descargar la imagen se la guarda en la memoria privada
             //y se asigna el listener sobre imageview para abrir el visor.
             if (image!=null) {
-                path = guardarImagen(context.getApplicationContext(),id_modelo,this.tipo_imagen, image);
+                path = guardarImagen(context.getApplicationContext(),nombre_modelo,this.tipo_imagen, image);
                 imgageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context.getApplicationContext(), ViewPagerActivity.class);
 
-                        intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
+                        intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+nombre_modelo);
                         intent.putExtra("index",tipo_imagen);
                         context.startActivity(intent);
 
@@ -225,9 +225,9 @@ public class ImagenModeloAdapter extends BaseAdapter {
     }
 
 
-    private String guardarImagen (Context context, String id_modelo,String tipo_foto, Bitmap imagen){
+    private String guardarImagen (Context context, String nombre_modelo,String tipo_foto, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+nombre_modelo, Context.MODE_PRIVATE);
         if(!dirImages.exists()){
             dirImages.mkdir();
         }
@@ -245,10 +245,10 @@ public class ImagenModeloAdapter extends BaseAdapter {
         }
         return myPath.getAbsolutePath();
     }
-    private String abrirImagen(final Context context, final String id_modelo, final String tipo_foto, ImageView imageView){
+    private String abrirImagen(final Context context, final String nombre_modelo, final String tipo_foto, ImageView imageView){
         String proceso=null;
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+id_modelo, Context.MODE_PRIVATE);
+        File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+nombre_modelo, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, tipo_foto + ".png");
         BufferedInputStream buf;
         FileInputStream fis;
@@ -280,7 +280,7 @@ public class ImagenModeloAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, ViewPagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+id_modelo);
+                    intent.putExtra("nombre_file", NOMBRE_MODELOS_FILE+nombre_modelo);
                     intent.putExtra("index",tipo_foto);
                     context.startActivity(intent);
 

@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DbModelo {
     public static final  String NOMBRE_TABLA = "modelo";
     public static final  String ID_MODELO = "_id";
-    public static final  String MODELO = "modelo";
+    public static final  String MODELO = "nombre";
     public static final  String AREA_CONST = "area_const";
     public static final  String PISOS = "pisos";
     public static final  String CUOTA_ENTRADA = "cuota_entrada";

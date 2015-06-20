@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
@@ -33,10 +34,16 @@ public class MainActivity extends ActionBarActivity {
                 getSupportFragmentManager(),android.R.id.tabcontent);
         tabHost.addTab(tabHost.newTabSpec("tab_urbanizaciones").setIndicator("URBANIZACIONES"),
                 TabUrbanizaciones.class, null);
+        tabHost.addTab(tabHost.newTabSpec("tab_financiamiento").setIndicator("FINANCIAMIENTO"),
+                Tab2.class, null);
         final TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
-        final View tabView = tw.getChildTabViewAt(0);
-        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
+        final View tabView1 = tw.getChildTabViewAt(0);
+        final View tabView2 = tw.getChildTabViewAt(1);
+        final TextView tv = (TextView)tabView1.findViewById(android.R.id.title);
+        final TextView tv2 = (TextView)tabView2.findViewById(android.R.id.title);
+        tv2.setTextSize(20);
         tv.setTextSize(20);
+        tv2.setTextColor(getResources().getColor(R.color.azul));
         tv.setTextColor(getResources().getColor(R.color.azul));
 
     }
@@ -76,12 +83,15 @@ public class MainActivity extends ActionBarActivity {
             editor.putString(user, sharedpreferences.getString(user, null));
             editor.commit();
 
+            DbFinanciamiento dbFinanciamiento=new DbFinanciamiento(this);
+            dbFinanciamiento.vaciar();
             DbModelo dbModelo=new DbModelo(this);
             dbModelo.vaciar();
             DbLote dbLote=new DbLote(this);
             dbLote.vaciar();
             DbProyecto dbProyecto=new DbProyecto(this);
             dbProyecto.vaciar();
+
             //moveTaskToBack(true);
             clearApplicationData();
             Intent i = new Intent(this, LoginActivity.class);

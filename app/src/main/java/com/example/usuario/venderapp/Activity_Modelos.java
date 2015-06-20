@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
 import com.example.usuario.venderapp.DataBase.DbModelo;
@@ -271,10 +272,24 @@ public class Activity_Modelos extends ActionBarActivity {
                     editarNumeroPagos(precio, layout);
             }
         });
-        editText=(EditText)layout.findViewById(R.id.tasaInteres);
-        editText.setText(""+modelo.getTasa());
-        EditText campo_numeros_pagos_saldo=(EditText)layout.findViewById(R.id.numeroPagosSaldo);
-        campo_numeros_pagos_saldo.setText("" + modelo.getPlazo_2());
+        EditText campo_tasa=(EditText)layout.findViewById(R.id.tasaInteres);
+        campo_tasa.setText("" + modelo.getTasa());
+        campo_tasa.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == false)
+                    editarSaldo(layout);
+            }
+        });
+        EditText campo_pagos_saldo=(EditText)layout.findViewById(R.id.numeroPagosSaldo);
+        campo_pagos_saldo.setText("" + modelo.getPlazo_2());
+        campo_pagos_saldo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus==false)
+                    editarSaldo(layout);
+            }
+        });
         EditText campo_entrada=(EditText)layout.findViewById(R.id.entradra);
         campo_entrada.setText((String)decimales.format(entrada));
         campo_entrada.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -295,13 +310,13 @@ public class Activity_Modelos extends ActionBarActivity {
             }
         });
         TextView textView=(TextView)layout.findViewById(R.id.cuotaEntrada);
-        textView.setText((String)decimales.format((entrada-cuota_inicial)/numPagosEntrada));
-        double cuota_ini=Double.parseDouble(editText.getText().toString());
+        textView.setText(decimales.format((entrada-cuota_inicial)/numPagosEntrada));
+        double cuota_ini=Double.parseDouble(edCuotaInicial.getText().toString().replace(",", "."));
         textView=(TextView)layout.findViewById(R.id.saldoPagos);
-        textView.setText((String)decimales.format(cuota_ini/numPagosSaldo));
-        Double saldo=(Double)(precio-entrada);
-        textView.setText((String)decimales.format(saldo));
-        valor_cuota=(Double)(saldo*modelo.getTasa()/100);
+        textView.setText(decimales.format(cuota_ini/numPagosSaldo));
+        Double saldo=(precio-entrada);
+        textView.setText(decimales.format(saldo));
+        valor_cuota=calcularCuotaSaldo(saldo,(double)modelo.getTasa(),modelo.getPlazo_2());
 
         textView=(TextView)layout.findViewById(R.id.cuotaSaldo);
         textView.setText((String)decimales.format(valor_cuota));
@@ -325,8 +340,14 @@ public class Activity_Modelos extends ActionBarActivity {
         int numeroPagos = Integer.parseInt(editTextNumeroPagos.getText().toString());
         double cuotaEntrada=(entrada-cuotaInicial)/numeroPagos;
         textViewCuotaEntrada.setText(decimales.format(cuotaEntrada));
-        textViewSaldo.setText((String) decimales.format(saldo));
-        //double valor_cuota;
+        textViewSaldo.setText(decimales.format(saldo));
+        EditText editTextTasa = (EditText)layout.findViewById(R.id.tasaInteres);
+        EditText editTextTNumPagos = (EditText)layout.findViewById(R.id.numeroPagosSaldo);
+        TextView textViewCuotaSaldo = (TextView)layout.findViewById(R.id.cuotaSaldo);
+        double tasa = Double.parseDouble(editTextTasa.getText().toString());
+        int numPagos = Integer.parseInt(editTextTNumPagos.getText().toString());
+        double valor_cuota = calcularCuotaSaldo(saldo,tasa,numPagos);
+        textViewCuotaSaldo.setText(decimales.format(valor_cuota));
     }
     void editarPorcentajeEntrada(Double precio,View layout){
         DecimalFormat decimales = new DecimalFormat("0.00");
@@ -345,7 +366,16 @@ public class Activity_Modelos extends ActionBarActivity {
         int numeroPagos = Integer.parseInt(editTextNumeroPagos.getText().toString());
         double cuotaEntrada=(entrada-cuotaInicial)/numeroPagos;
         textViewCuotaEntrada.setText(decimales.format(cuotaEntrada));
-        textViewSaldo.setText((String) decimales.format(saldo));
+        textViewSaldo.setText(decimales.format(saldo));
+        EditText editTextTasa = (EditText)layout.findViewById(R.id.tasaInteres);
+        EditText editTextTNumPagos = (EditText)layout.findViewById(R.id.numeroPagosSaldo);
+        TextView textViewCuotaSaldo = (TextView)layout.findViewById(R.id.cuotaSaldo);
+        double tasa = Double.parseDouble(editTextTasa.getText().toString());
+        int numPagos = Integer.parseInt(editTextTNumPagos.getText().toString());
+        double valor_cuota = calcularCuotaSaldo(saldo,tasa,numPagos);
+        textViewCuotaSaldo.setText(decimales.format(valor_cuota));
+
+
     }
     void editarCuotaInicial(Double precio,View layout){
         DecimalFormat decimales = new DecimalFormat("0.00");
@@ -396,7 +426,20 @@ public class Activity_Modelos extends ActionBarActivity {
         textViewCuotaEntrada.setText(decimales.format(cuota));
 
     }
-    void guardarFinanciamiento(Modelo modelo,View layout,Context context){
+    void editarSaldo(View layout){
+        DecimalFormat decimales = new DecimalFormat("0.00");
+        TextView textViewSaldo = (TextView)layout.findViewById(R.id.saldoPagos);
+        EditText editTextTasa = (EditText)layout.findViewById(R.id.tasaInteres);
+        EditText editTextTNumPagos = (EditText)layout.findViewById(R.id.numeroPagosSaldo);
+        TextView textViewCuotaSaldo = (TextView)layout.findViewById(R.id.cuotaSaldo);
+        double saldo = Double.parseDouble(textViewSaldo.getText().toString().replace(",", "."));
+        double tasa = Double.parseDouble(editTextTasa.getText().toString());
+        int numPagos = Integer.parseInt(editTextTNumPagos.getText().toString());
+        double valor_cuota = calcularCuotaSaldo(saldo,tasa,numPagos);
+        textViewCuotaSaldo.setText(decimales.format(valor_cuota));
+    }
+
+        void guardarFinanciamiento(Modelo modelo,View layout,Context context){
 
         DbFinanciamiento dbFinanciamiento=new DbFinanciamiento(context);
         Date fecha=new Date();
@@ -412,19 +455,27 @@ public class Activity_Modelos extends ActionBarActivity {
                          String porcentaje_entrada,String cuota_inicial, String porcentaje_cuota_inicial,
                          String num_pagos_entrada,String cuota_entrada,String saldo,String tasa_interes,
                          String num_pagos_saldo,String cliente, Date fecha)*/
-        dbFinanciamiento.insertar(modelo.getId(),modelo.getNombre_modelo(),
-                ((TextView)layout.findViewById(R.id.precioFinanciamiento)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.entradra)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.porcentajeCuotaEntrada)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.cuotaInicial)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.porcentajeCuotaInicial)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.numeroPagosEntrada)).getText().toString(),
-                ((TextView)layout.findViewById(R.id.cuotaEntrada)).getText().toString(),
-                ((TextView)layout.findViewById(R.id.saldoPagos)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.tasaInteres)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.numeroPagosSaldo)).getText().toString(),
-                ((EditText)layout.findViewById(R.id.cliente)).getText().toString(),
-                c.getTime());
+            dbFinanciamiento.insertar(modelo.getId(), modelo.getNombre_modelo(),
+            ((TextView) layout.findViewById(R.id.precioFinanciamiento)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.entradra)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.porcentajeCuotaEntrada)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.cuotaInicial)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.porcentajeCuotaInicial)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.numeroPagosEntrada)).getText().toString(),
+            ((TextView) layout.findViewById(R.id.cuotaEntrada)).getText().toString(),
+            ((TextView) layout.findViewById(R.id.saldoPagos)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.tasaInteres)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.numeroPagosSaldo)).getText().toString(),
+            ((EditText) layout.findViewById(R.id.cliente)).getText().toString(),
+            c.getTime());
+            Toast.makeText(context,"Financiamieno Guardado",Toast.LENGTH_SHORT).show();
+
+    }
+    private double calcularCuotaSaldo(double Capital,double tasa,int pagos){
+        double tasa_m=(Math.pow(1.0+tasa/100.0,1.0/12.0))-1.0;
+        double y=(Math.pow(1.0+tasa_m,(double)pagos))-1.0;
+        double x=Capital*tasa_m*Math.pow(1.0+tasa_m,(double)pagos);
+        return x/y;
     }
 
 

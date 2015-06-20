@@ -41,6 +41,7 @@ public class DbFinanciamiento {
 
     public static final String CREATE_TABLE = "create table "+NOMBRE_TABLA+" ("
             + ID_FINANCIAMIENTO + " integer primary key autoincrement,"
+            + ID_MODELO + " tex not null,"
             + NOMBRE_MODELO + " tex not null,"
             + PRECIO + " text not null,"
             + ENTRADA + " text not null,"
@@ -52,7 +53,7 @@ public class DbFinanciamiento {
             + SALDO + " text not null,"
             + TASA_INTERES + " text not null,"
             + NUM_PAGOS_SALDO + " text not null,"
-            + CLIENTE + " text not null,"
+            + CLIENTE + " text null,"
             + FECHA +" TIMESTAMP NOT NULL,"
             + " FOREIGN KEY("+ID_MODELO+") REFERENCES "+TABLE_FK+"("+FK_ID+"));";
 
