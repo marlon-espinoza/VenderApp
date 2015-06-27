@@ -14,13 +14,13 @@
             android:layout_height="match_parent"
             android:text="URBANIZACIÓN: "
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="10dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/urbanizacion"
-            android:textSize="20dp"
+            android:textSize="10dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,26 +32,26 @@
                 android:layout_height="match_parent"
                 android:text=" LOTE: "
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/lote_modelo"
-                android:textSize="20dp"
+                android:textSize="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=" MANZANA: "
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/manzana_modelo"
-                android:textSize="20dp"
+                android:textSize="8dp"
                 />
         </LinearLayout>
 

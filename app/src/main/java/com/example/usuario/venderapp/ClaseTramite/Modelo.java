@@ -1,7 +1,6 @@
-package com.example.usuario.venderapp.FrameLayout;
+package com.example.usuario.venderapp.ClaseTramite;
 
 import java.text.DecimalFormat;
-import java.text.Format;
 
 /**
  * Created by USUARIO on 11-jun-15.
@@ -22,13 +21,18 @@ public class Modelo {
     public static  String img_pb;
     public static  String img_pa_1;
     public static  String img_pa_2;
+    public static  String urbanizacion;
+    public static  String lote;
+    public static  String manzana;
+
     public static DecimalFormat decimales = new DecimalFormat("0.00");
     public static DecimalFormat porcentajes = new DecimalFormat("##");
 
 
     public Modelo(String id,String modelo,String area,String pisos, String cuota_ent, String cuota_ini,
                   String tasa, String plazo1, String plazo2,String plazo3,
-                  String precio, String img_fach,String img_pb,String img_pa1,String img_pa2) {
+                  String precio, String img_fach,String img_pb,String img_pa1,String img_pa2,
+                  String urbanizacion,String lote, String manzana) {
         this.id=id;
         this.nombre_modelo=modelo;
         this.area_const=area;
@@ -43,6 +47,9 @@ public class Modelo {
         this.img_pb=img_pb;
         this.img_pa_1=img_pa1;
         this.img_pa_2=img_pa2;
+        this.urbanizacion=urbanizacion;
+        this.lote=lote;
+        this.manzana=manzana;
     }
 
     public static String getId() {
@@ -107,4 +114,17 @@ public class Modelo {
     public static String getImg_pa_2() {
         return img_pa_2;
     }
+
+    public static String getLote() {
+        return lote;
+    }
+
+    public static String getUrbanizacion() {
+        return urbanizacion;
+    }
+
+    public static String getManzana() {
+        return manzana;
+    }
+
 }

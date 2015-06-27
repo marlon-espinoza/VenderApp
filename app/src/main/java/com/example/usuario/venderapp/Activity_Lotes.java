@@ -157,8 +157,6 @@ public class Activity_Lotes extends ActionBarActivity {
             if(dbLote!=null)
                 dbLote.close();
         }
-        //ListaLoteAdapter lotesAdp=new ListaLoteAdapter(this.getApplicationContext(),list);
-        //lv.setAdapter(lotesAdp);
 
 
 
