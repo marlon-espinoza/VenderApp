@@ -18,7 +18,7 @@ import java.util.ArrayList;
  /**
  * Created by USUARIO on 23-abr-15.
  */
-public class Tab2 extends Fragment {
+public class TabFinanciamientos extends Fragment {
      ArrayList<String[]> financiamientos;
 
 

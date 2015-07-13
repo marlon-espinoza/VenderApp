@@ -62,8 +62,7 @@ public class DbFinanciamiento {
             + NUM_PAGOS_SALDO + " text not null,"
             + CUOTA_SALDO + " text not null,"
             + CLIENTE + " text null,"
-            + FECHA +" TIMESTAMP NOT NULL,"
-            + " FOREIGN KEY("+ID_MODELO+") REFERENCES "+TABLE_FK+"("+FK_ID+"));";
+            + FECHA +" TIMESTAMP NOT NULL);";
 
     public DbFinanciamiento(Context contexto) {
         helper = new DbHelper(contexto);

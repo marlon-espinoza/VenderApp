@@ -73,7 +73,7 @@ public class Activity_Modelos extends ActionBarActivity {
                     Button btn;
                     final String[] modelo=new String[]{dato.getString(0),dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
                             dato.getString(5),dato.getString(6),dato.getString(7),dato.getString(8),dato.getString(9),dato.getString(10),
-                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14),urbanizacion[0],lote,manzana};
+                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14),urbanizacion[0],lote,manzana,idLote};
 
                     final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
@@ -154,7 +154,7 @@ public class Activity_Modelos extends ActionBarActivity {
 
         final Modelo modelo=new Modelo(sModelo[0],sModelo[1],sModelo[2],sModelo[3],sModelo[4],
                 sModelo[5],sModelo[6],sModelo[7],sModelo[8],sModelo[9],sModelo[10],
-                sModelo[11],sModelo[12],sModelo[13],sModelo[14],sModelo[15],sModelo[16],sModelo[17]);
+                sModelo[11],sModelo[12],sModelo[13],sModelo[14],sModelo[15],sModelo[16],sModelo[17],idLote);
         //inflate layout popup
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupModelos);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -34,8 +34,8 @@ public class MainActivity extends ActionBarActivity {
                 getSupportFragmentManager(),android.R.id.tabcontent);
         tabHost.addTab(tabHost.newTabSpec("tab_urbanizaciones").setIndicator("URBANIZACIONES"),
                 TabUrbanizaciones.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab_financiamiento").setIndicator("FINANCIAMIENTO"),
-                Tab2.class, null);
+        tabHost.addTab(tabHost.newTabSpec("tab_financiamiento").setIndicator("FINANCIAMIENTOs"),
+                TabFinanciamientos.class, null);
         final TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
         final View tabView1 = tw.getChildTabViewAt(0);
         final View tabView2 = tw.getChildTabViewAt(1);

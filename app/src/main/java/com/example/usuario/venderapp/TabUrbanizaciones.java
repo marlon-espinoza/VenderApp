@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 public class TabUrbanizaciones extends Fragment {
     ArrayList<String[]> list;
+
     ListView lv;
     Button btn;
     @Override
@@ -63,9 +64,7 @@ public class TabUrbanizaciones extends Fragment {
         ListaUrbAdapter listaUrbAdapter;
             list=new ArrayList<String[]>();
             DbProyecto dbproy=null;
-
         try {
-            System.out.println("Extrayendo proyectos...");
             dbproy = new DbProyecto(this.getActivity());
             Cursor dato = dbproy.consultar(null);
             if (dato.moveToFirst()) {
@@ -75,15 +74,12 @@ public class TabUrbanizaciones extends Fragment {
 
                 } while(dato.moveToNext());
             }
-
         }catch (Exception e){
             System.out.println(e.toString());
         }finally {
             if(dbproy!=null)
                 dbproy.close();
         }
-
-
             listaUrbAdapter =new ListaUrbAdapter(getActivity(),list);
             lv.setAdapter(listaUrbAdapter);
 

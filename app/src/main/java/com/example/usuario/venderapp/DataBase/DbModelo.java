@@ -44,7 +44,7 @@ public class DbModelo {
             + ESTADO + " text not null,"
             + AREA + " text not null,"
             + ENTRADA + " text not null,"
-            + SALIDA + " text not null,"
+            + ENTREGA + " text not null,"
             + " FOREIGN KEY("+ID_PROY+") REFERENCES "+TABLE_FK+"("+FK_ID+"));";
 */
 
@@ -110,6 +110,17 @@ public class DbModelo {
         //System.out.println("id del curso: "+id);
 
         return db.query(NOMBRE_TABLA, campos, ID_LOTE+"=?", args, null, null, null);
+    }
+    public Cursor consultarModelo(String id_modelo){
+        //insert  into contactos
+
+        String[] campos = new String[] {MODELO,AREA_CONST,PISOS,CUOTA_ENTRADA,CUOTA_INICIAL,TASA,PLAZO_1,
+                PLAZO_2,PLAZO_3,PRECIO,IMAGEN_FACHADA,IMAGEN_PLANTA_BAJA,IMAGEN_PLANTA_ALTA_1,IMAGEN_PLANTA_ALTA_2,ID_LOTE};
+        String[] args = new String[] {id_modelo};
+        //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
+        //System.out.println("id del curso: "+id);
+
+        return db.query(NOMBRE_TABLA, campos, ID_MODELO+"=?", args, null, null, null);
     }
 
 

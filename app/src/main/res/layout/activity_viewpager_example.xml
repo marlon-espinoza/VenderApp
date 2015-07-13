@@ -1,7 +1,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#ff000000">
 
     <!-- ExtendedViewPager is a custom view and must be referred to by its full package name in XML -->
 	<com.example.usuario.venderapp.Visor.ExtendedViewPager

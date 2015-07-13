@@ -20,8 +20,10 @@ public class MyConnection {
     private final String DB="MedusaEv";
     private final String USER ="u_aminweb";
     private final String PASSWORD = "U_Admin2014Web";
-    private final String URL = "jdbc:jtds:sqlserver://"+SERVIDOR+":"+PUERTO+";instanceName=medusa_webqa"+";databaseName="+DB
-            +";user="+USER+";password="+PASSWORD;
+    private final String INSTANCE_NAME = "medusa_webqa";
+    private final String URL = "jdbc:jtds:sqlserver://"+SERVIDOR+":"
+            +PUERTO+";instanceName="+INSTANCE_NAME+";databaseName="
+            +DB+";user="+USER+";password="+PASSWORD;
 
     private boolean active = false;
 
@@ -33,15 +35,6 @@ public class MyConnection {
     public ResultSet consulta(String query){
         try {
             rs = st.executeQuery(query);
-
-            //System.out.println(rs.getString(1));
-            //System.out.println(st.execute(query));
-
-/*
-                if (rs.next()) {
-                    System.out.println(rs.getString(1));
-                }
-*/
         } catch (Exception ex) {
             Logger lgr = Logger.getLogger(MyConnection.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -51,7 +44,6 @@ public class MyConnection {
                 e.printStackTrace();
             }
             rs=null;
-            System.out.println("murio aqui por "+ex.toString());
         }
         return rs;
     }
@@ -77,7 +69,6 @@ public class MyConnection {
                 e.printStackTrace();
             }
             cs=null;
-            System.out.println("murio aqui por "+ex.toString());
         }
         return resultado;
     }
@@ -88,22 +79,14 @@ public class MyConnection {
     public MyConnection(){
 
                 try{
-                    System.out.println("aqui llego");
-                    System.out.println(URL);
                     //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                     Class.forName("net.sourceforge.jtds.jdbc.Driver");
-                    System.out.println("ojo");
                     con = DriverManager.getConnection(URL);
-                    System.out.println("aqui aquedo");
                     st = con.createStatement();
                     active=true;
-
-
                 }catch(Exception e){
-                    System.out.println("inicio error");
                     System.out.println(e.toString());
                     e.printStackTrace();
-                    System.out.println("fin error");
                     active=false;
                     try {
                         if (rs != null) {
@@ -117,7 +100,6 @@ public class MyConnection {
                         }
 
                     } catch (SQLException ex) {
-
                         active=false;
                         Logger lgr = Logger.getLogger(MyConnection.class.getName());
                         lgr.log(Level.WARNING, ex.getMessage(), ex);

@@ -24,6 +24,8 @@ public class Modelo {
     public static  String urbanizacion;
     public static  String lote;
     public static  String manzana;
+    public static  String id_lote;
+
 
     public static DecimalFormat decimales = new DecimalFormat("0.00");
     public static DecimalFormat porcentajes = new DecimalFormat("##");
@@ -32,7 +34,7 @@ public class Modelo {
     public Modelo(String id,String modelo,String area,String pisos, String cuota_ent, String cuota_ini,
                   String tasa, String plazo1, String plazo2,String plazo3,
                   String precio, String img_fach,String img_pb,String img_pa1,String img_pa2,
-                  String urbanizacion,String lote, String manzana) {
+                  String urbanizacion,String lote, String manzana,String id_lote) {
         this.id=id;
         this.nombre_modelo=modelo;
         this.area_const=area;
@@ -50,6 +52,7 @@ public class Modelo {
         this.urbanizacion=urbanizacion;
         this.lote=lote;
         this.manzana=manzana;
+        this.id_lote=id_lote;
     }
 
     public static String getId() {
@@ -127,4 +130,7 @@ public class Modelo {
         return manzana;
     }
 
+    public static String getId_lote() {
+        return id_lote;
+    }
 }

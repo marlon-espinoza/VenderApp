@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ListaUrbAdapter extends ArrayAdapter<String[]> {
     Context context;
     public ListaUrbAdapter(Context context, ArrayList<String[]> List) {
-        super(context, 0, List);
+        super (context, 0, List);
         this.context=context;
     }
 

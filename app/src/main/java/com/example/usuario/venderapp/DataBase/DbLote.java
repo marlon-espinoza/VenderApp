@@ -16,7 +16,8 @@ public class DbLote {
     public static final  String ESTADO = "estado_construccion";
     public static final  String AREA = "area_terreno";
     public static final  String ENTRADA = "plazo_entrada";
-    public static final  String SALIDA = "plazo_salida";
+    public static final  String ENTREGA = "plazo_entrega";
+    public static final  String VENDER_COMO = "vender_como";
     public static final  String ID_PROY = "proy_id";
 
     //Para FK
@@ -34,7 +35,8 @@ public class DbLote {
             + ESTADO + " text not null,"
             + AREA + " text not null,"
             + ENTRADA + " text not null,"
-            + SALIDA + " text not null,"
+            + ENTREGA + " text not null,"
+            + VENDER_COMO + " text not null,"
             + " FOREIGN KEY("+ID_PROY+") REFERENCES "+TABLE_FK+"("+FK_ID+"));";
 
     public DbLote(Context contexto) {
@@ -42,7 +44,7 @@ public class DbLote {
         db = helper.getWritableDatabase();
     }
     public ContentValues generarContentValues(String id,String id_proy,String manzana, String num_lote, String estado,
-                                              String area, String entrada, String salida){
+                                              String area, String entrada, String salida,String vender_como){
         ContentValues valores = new ContentValues();
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         valores.put(ID_LOTE,id);
@@ -52,18 +54,19 @@ public class DbLote {
         valores.put(ESTADO,estado);
         valores.put(AREA,area);
         valores.put(ENTRADA,entrada);
-        valores.put(SALIDA,salida);
+        valores.put(ENTREGA,salida);
+        valores.put(VENDER_COMO,vender_como);
         return valores;
     }
     public void insertar(String id,String id_proy,String manzana, String num_lote, String estado,
-                         String area, String entrada, String salida){
+                         String area, String entrada, String salida,String vender_como){
         //insert  into contactos
-        db.insert(NOMBRE_TABLA,null,generarContentValues(id,id_proy,manzana,num_lote,estado,area,entrada,salida));
+        db.insert(NOMBRE_TABLA,null,generarContentValues(id,id_proy,manzana,num_lote,estado,area,entrada,salida,vender_como));
     }
     public Cursor consultar(String id){
         //insert  into contactos
 
-        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ESTADO,AREA,ENTRADA,SALIDA};
+        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ESTADO,AREA,ENTRADA, ENTREGA,VENDER_COMO};
         String[] args = new String[] {id};
         //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
         //System.out.println("id del curso: "+id);
@@ -73,7 +76,7 @@ public class DbLote {
     public Cursor consultarLotePorProy(String id){
         //insert  into contactos
 
-        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ENTRADA,SALIDA,AREA,ESTADO};
+        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ENTRADA, ENTREGA,AREA,ESTADO};
         String[] args = new String[] {id};
         //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
         //System.out.println("id del curso: "+id);

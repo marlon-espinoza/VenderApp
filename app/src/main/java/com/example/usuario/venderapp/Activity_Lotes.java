@@ -54,7 +54,7 @@ public class Activity_Lotes extends ActionBarActivity {
     private TextView fallido;
     private TextView nombreUrb;
     private String imageHttpAddress = "http://ciudadceleste.com/Apps/Images/arboleda.jpg";
-    private String IMAGENES_LOTES = "ImagenesLotes";
+    private String IMAGENES_LOTES = "ImagenesUrb";
 
     private boolean mContentLoaded;
     private ImageView mImageView;
@@ -81,6 +81,7 @@ public class Activity_Lotes extends ActionBarActivity {
         if(path==null) {
             mLoadingView.setVisibility(View.VISIBLE);
             CargarImagenes nT = new CargarImagenes();
+            //nT.execute(imageHttpAddress+nombreUrb+".jpg");
             nT.execute(imageHttpAddress);
         }
 

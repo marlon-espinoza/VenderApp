@@ -1,0 +1,385 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/popupFinanciamiento"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideInset"
+        android:layout_margin="10dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical|horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/background_material_light">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*"
+                    android:padding="10dp">
+                    <TableRow>
+                        <TextView
+                            android:text="Urbanización:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text=""
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/urbanizacion_detalle"/>
+
+                        </LinearLayout>
+
+
+                    </TableRow>
+                    <TableRow>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:text="Lote: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/lote_detalle"/>
+                            <TextView
+                                android:text=" Manzana: "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/manzana_detalle"/>
+                        </LinearLayout>
+
+
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:text="Precio:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/precioFinanciamiento"/>
+
+                        </LinearLayout>
+
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:background="@color/common_signin_btn_dark_text_default">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Forma de pago de cuota de entrada"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_menu_material" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*"
+                    android:padding="10dp"
+                    >
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="15dp">
+                        <TextView android:text="Entrada:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/entradra_detalle"
+                                android:textStyle="normal"
+                                android:maxLength="9"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/porcentajeCuotaEntrada_detalle"
+                                android:maxLength="6"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
+
+                    </TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="15dp"
+                        >
+                        <TextView android:text="Cuota Inicial:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/cuotaInicial_detalle"
+                                android:layout_gravity="center_vertical"
+                                android:textStyle="normal"
+                                android:maxLength="9"/>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/porcentajeCuotaInicial_detalle"
+                                android:maxLength="6"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
+
+                    </TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="5dp">
+                        <TextView android:text="No. de Pagos:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/numeroPagosEntrada_detalle"
+                            android:numeric="integer"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Cuota:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cuotaEntrada"
+                                android:inputType="numberDecimal"
+                                android:layout_span="2"/>
+                        </LinearLayout>
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:background="@color/common_signin_btn_dark_text_default">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Forma de pago del saldo"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:textSize="@dimen/abc_text_size_menu_material"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="15dp">
+                        <TextView android:text="Saldo:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/saldoPagos"
+                                android:inputType="numberDecimal"
+                                android:layout_span="2"/>
+
+                        </LinearLayout>
+                    </TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="15dp">
+                        <TextView android:text="Tasa de Interes:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tasaInteres_detalle"
+                                android:maxLength="2"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="%"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                        </LinearLayout>
+
+                    </TableRow>
+                    <TableRow android:layout_height="wrap_content"
+                        android:paddingBottom="5dp" android:paddingTop="5dp">
+                        <TextView android:text="No. de Pagos:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/numeroPagosSaldo_detalle"
+                            android:maxLength="3"
+                            />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Valor de la cuota:"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="$ "
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/azul3"/>
+                            <TextView
+                                android:text="29903.23"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cuotaSaldo"
+                                />
+
+                        </LinearLayout>
+
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="Cliente:"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cliente_detalle"
+                            android:layout_span="2"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:maxLength="25"
+                            />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

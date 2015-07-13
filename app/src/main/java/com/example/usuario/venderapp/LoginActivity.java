@@ -25,6 +25,8 @@ import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
 import com.example.usuario.venderapp.DataBase.MyConnection;
 
+import org.apache.commons.logging.Log;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -202,12 +204,12 @@ public class LoginActivity extends Activity {
                         @Override
                         public void run() {
                             //update ui here
-                            Toast.makeText(getApplicationContext(), "Usuario identificado", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Usuario Correcto", Toast.LENGTH_LONG).show();
                             Toast.makeText(getApplicationContext(), "Estamos cargando tu información...", Toast.LENGTH_LONG).show();
                             lMensaje.setVisibility(View.VISIBLE);
                         }
                     });
-                    getProyectos(con, usuario);
+                    getInformacion(con, usuario);
 
                 }
                 else bool="false";
@@ -265,7 +267,6 @@ public class LoginActivity extends Activity {
                         //System.out.println(i);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        System.out.println("una falla");
                     }
                     mProgress.setProgress(i);
                 }
@@ -279,7 +280,6 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String result) {
             log_bool=result;
             attemptLogin();
-            System.out.println("si termino");
             cargango.setVisibility(View.GONE);
             if (log_bool.equalsIgnoreCase("true")) {
                 finish();
@@ -305,30 +305,17 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private void getProyectos(MyConnection con,String user){
-
+    private void getInformacion(MyConnection con, String user){
 
         ResultSet rs=null;
-
         String q_urbanizaciones="select * from dbo.vw_user_urb where usuario= '&PV_USER&'";
-        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy where usuario='&PV_USER&' and codigo_urbanizacion='2';";
-        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega "+
-                "from dbo.vw_lotes where codigo_urbanizacion='2'";
+        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy where usuario='&PV_USER&' and"+
+                " codigo_urbanizacion='2';";
+        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega,vender_como "+
+                "from dbo.vw_lotes_app where codigo_urbanizacion='2'";
         String q_modelos="select * from dbo.vw_modelos_en_lot where codigo_lote='&PV_LOTE&'";
-
-
         try{
-
             if(con.getActive()) {
-
-                /*rs=con.consulta(q_urbanizaciones.replace("&PV_USER&", user));
-                DbUrbanizacion urb;
-                urb=new DbUrbanizacion(this);
-                while (rs.next()) {
-                    //insertar(String id,String id_curso,String nombre_curso,String titulo,String contenido,Date fecha,String num_msgs)
-                    urb.insertar(rs.getString(2),rs.getString(3));
-                }*/
-
                 rs=con.consulta(q_proyectos.replace("&PV_USER&", user));
                 DbProyecto proy;
                 proy=new DbProyecto(this);
@@ -342,25 +329,13 @@ public class LoginActivity extends Activity {
                 DbModelo modelo=new DbModelo(this);
                 rs=con.consulta(q_lotes);
                 while (rs.next()) {
-                    //ResultSet rs2=null;
-                    lote.insertar(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
-                    /*rs2=con.consulta(q_modelos.replace("&PV_LOTE&", rs.getString(1)));
-                    while(rs2.next()){
-                        modelo.insertar(rs2.getString(2),rs2.getString(1),rs2.getString(3),rs2.getString(4),rs2.getString(5),rs2.getString(6),
-                                rs2.getString(7),rs2.getString(8),rs2.getString(9),rs2.getString(10),rs2.getString(11),rs2.getString(12),rs2.getString(13)
-                                ,rs2.getString(14),rs2.getString(15));
-                    }
-                    rs2.close();
-                    rs2=null;*/
+                    android.util.Log.w("vender", rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + " " + rs.getString(7) + " " + rs.getString(8) + " " + rs.getString(9));
+                    lote.insertar(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 }
                 rs.close();
                 rs=null;
-
-
                 try {
-
                     Cursor dato = lote.consultarLotePorProy(null);
-
                     if (dato.moveToFirst()) {
                         //Recorremos el cursor hasta que no haya más registros
                         do {
@@ -402,4 +377,5 @@ public class LoginActivity extends Activity {
         }
 
     }
+
 }

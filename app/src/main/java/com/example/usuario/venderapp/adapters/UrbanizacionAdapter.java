@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.usuario.venderapp.MainActivity;
 import com.example.usuario.venderapp.R;
-import com.example.usuario.venderapp.Tab2;
 import com.example.usuario.venderapp.Urbanizacion;
 
 import java.io.IOException;
