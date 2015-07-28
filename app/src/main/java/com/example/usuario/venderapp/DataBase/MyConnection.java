@@ -1,5 +1,12 @@
 package com.example.usuario.venderapp.DataBase;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +33,8 @@ public class MyConnection {
             +DB+";user="+USER+";password="+PASSWORD;
 
     private boolean active = false;
+    Handler pro_handler;
+    int progress;
 
     Connection con = null;
     Statement st = null;
@@ -131,6 +140,101 @@ public class MyConnection {
             active=false;
             Logger lgr = Logger.getLogger(MyConnection.class.getName());
             lgr.log(Level.WARNING, ex.getMessage(), ex);
+        }
+
+    }
+
+
+
+    public void actualizarDatos(Context context, String user,ProgressDialog progress) {
+
+        ResultSet rs=null;
+
+        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy where usuario='&PV_USER&' and"+
+                " codigo_urbanizacion='2';";
+        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega,vender_como "+
+                "from dbo.vw_lotes_app where codigo_urbanizacion='2'";
+        String q_modelos = "Select * from dbo.vw_modelos_en_lot_app m "+
+                " inner join dbo.vw_lotes_app l on l.codigo_lote = m.codigo_lote AND l.vender_como='&PV_VENDER_COMO&'"+
+                " where m.codigo_lote='&PV_LOTE&' and m.modelo'&PV_SOLAR&'";
+
+        try{
+
+            rs=consulta(q_proyectos.replace("&PV_USER&", user));
+
+            DbProyecto proy;
+            proy=new DbProyecto(context);
+            while (rs.next()) {
+                //insertar(String id,String id_curso,String nombre_curso,String titulo,String contenido,Date fecha,String num_msgs)
+                proy.insertar(rs.getString(1),rs.getString(2));
+            }
+            rs.close();
+            rs=null;
+            DbLote lote=new DbLote(context);
+            DbModelo modelo=new DbModelo(context);
+            rs=consulta(q_lotes);
+            while (rs.next()) {
+                lote.insertar(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+            }
+            rs.close();
+            rs=null;
+            try {
+                Cursor dato = lote.consultarLotePorProy(null);
+                int lotes=dato.getCount();
+                double progreso=100.0/lotes;
+                double incremento=0;
+                if (dato.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+                        //System.out.println(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)));
+                        if (dato.getString(7).equals("1"))
+                            rs=consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'", "<> 'SOLAR'"));
+
+                        else
+                            rs=consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'", "= 'SOLAR'"));
+                        while (rs.next()) {
+
+                            //db.insert(NOMBRE_TABLA,null,generarContentValues(modelo,id_lote,area,pisos,cuota_ent,cuota_ini,tasa,plazo1,
+                            //plazo2,plazo3,precio,img_fach,img_pb,img_pa1,img_pa2));
+                            modelo.insertar(rs.getString(2),rs.getString(1)+ dato.getString(7),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+                                    rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13)
+                                    ,rs.getString(14),rs.getString(15));
+
+                        }
+                        incremento+=progreso;
+                        if(incremento>=1.0&&incremento<1.5){
+                            progress.incrementProgressBy(1);
+                            incremento-=1.0;
+                        }
+                        else if(incremento>=1.5){
+                            progress.incrementProgressBy(2);
+                            incremento=-1.5;
+                        }
+                        rs.close();
+                        rs=null;
+
+                    } while(dato.moveToNext());
+                    progress.incrementProgressBy(100-progress.getProgress());
+                }
+
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            try {
+
+                if(con!=null)
+                    con.close();
+                if(rs!=null)
+                    rs.close();
+            } catch (SQLException ex) {
+                //Logger.getLogger(consulta.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

@@ -1,9 +1,14 @@
 package com.example.usuario.venderapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,13 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
+import com.example.usuario.venderapp.DataBase.MyConnection;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -49,11 +60,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_main);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,51 +76,45 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        String user = "llaveUsuarioSIDWeb";
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id == R.id.cerrar){
-            String user = "llaveUsuarioSIDWeb";
-            SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.putString(user, sharedpreferences.getString(user, null));
-            editor.commit();
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.cerrar:
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.putString(user, sharedpreferences.getString(user, null));
+                editor.commit();
+                borrarDatos();
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+                this.finish();
+                break;
+            case R.id.actualizar_todo:
+                sharedpreferences=getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                String u=sharedpreferences.getString(user, null);
+                borrarDatos();
 
-            DbFinanciamiento dbFinanciamiento=new DbFinanciamiento(this);
-            dbFinanciamiento.vaciar();
-            DbModelo dbModelo=new DbModelo(this);
-            dbModelo.vaciar();
-            DbLote dbLote=new DbLote(this);
-            dbLote.vaciar();
-            DbProyecto dbProyecto=new DbProyecto(this);
-            dbProyecto.vaciar();
+                ActualizarDatos act=new ActualizarDatos(MainActivity.this,u);
+                act.execute();
+                break;
+            }
 
-            //moveTaskToBack(true);
-            clearApplicationData();
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            this.finish();
-        }
 
         return super.onOptionsItemSelected(item);
     }
-    public void logout() {
+    public void borrarDatos() {
 
-        String user = "llaveUsuarioSIDWeb";
-        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.clear();
-        editor.putString(user, sharedpreferences.getString(user, null));
-        editor.commit();
-
+        DbModelo dbModelo = new DbModelo(this);
+        dbModelo.vaciar();
+        DbLote dbLote = new DbLote(this);
+        dbLote.vaciar();
+        DbProyecto dbProyecto = new DbProyecto(this);
+        dbProyecto.vaciar();
         //moveTaskToBack(true);
-
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        this.finish();
+        clearApplicationData();
     }
     public void clearApplicationData() {
         File cache = getCacheDir();
@@ -146,4 +146,47 @@ public class MainActivity extends ActionBarActivity {
     public FragmentTabHost getMyTabHost(){
         return tabHost;
     }
+    public class ActualizarDatos extends AsyncTask<String, Void, String> {
+        Context contexto;
+        String user;
+        ProgressDialog progressDoalog;
+        Handler pro_handler;
+        public ActualizarDatos(Context c,String u){
+            contexto=c;
+            user=u;
+        }
+        @Override
+        protected void onPreExecute() {
+            progressDoalog = new ProgressDialog(MainActivity.this);
+            progressDoalog.setMax(100);
+            progressDoalog.setMessage("Cargando urbanizaciones, lotes y modelos...");
+            progressDoalog.setTitle("Actualización");
+            progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDoalog.setCanceledOnTouchOutside(false);
+            progressDoalog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            MyConnection con=new MyConnection();
+            con.actualizarDatos(contexto,user,progressDoalog);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            progressDoalog.dismiss();
+
+
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
+
+
 }

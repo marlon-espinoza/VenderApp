@@ -46,11 +46,11 @@
     </style>
     
     <style name="tableRow1">
-        <item name="android:background">#0431B4</item>
+        <item name="android:background">@color/azul2</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
     </style>
     <style name="tableRow2">
-        <item name="android:background">#5858FA</item>
+        <item name="android:background">@color/azul2</item>
     </style>
 </resources>

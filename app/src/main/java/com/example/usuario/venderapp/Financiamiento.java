@@ -33,6 +33,9 @@ import java.util.Date;
  * Created by USUARIO on 26-jun-15.
  */
 public class Financiamiento {
+    /*DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;*/
     AlertDialog.Builder builder;
     final AlertDialog alertDialog;
     int dialogWidth =600; // specify a value here
@@ -543,7 +546,6 @@ public class Financiamiento {
         Calendar c= Calendar.getInstance();
         //c.set(fecha.getYear()+1900, fecha.getMonth(), fecha.getDate(), tiempo.getHours(), tiempo.getMinutes());
         //d.setTime(c.getTimeInMillis());
-        System.out.println(fecha);
         c.setTime(fecha);
         c.set(Calendar.HOUR,tiempo.getHours());
         c.set(Calendar.MINUTE, tiempo.getMinutes());
@@ -564,9 +566,9 @@ public class Financiamiento {
                 ((TextView) layout.findViewById(R.id.cuotaSaldo)).getText().toString(),
                 ((EditText) layout.findViewById(R.id.cliente)).getText().toString(),
                 c.getTime());
-            ((TextView) convertView.findViewById(R.id.cuotaEntradaVw)).setText("$"+((EditText) layout.findViewById(R.id.entradra)).getText().toString());
-            ((TextView) convertView.findViewById(R.id.cuotaSaldoVw)).setText("$"+((TextView) layout.findViewById(R.id.saldoPagos)).getText().toString());
-            ((TextView) convertView.findViewById(R.id.clienteVw)).setText(((EditText) layout.findViewById(R.id.cliente)).getText().toString());
+                ((TextView) convertView.findViewById(R.id.cuotaEntradaVw)).setText("$"+((TextView) layout.findViewById(R.id.cuotaEntrada)).getText().toString());
+                ((TextView) convertView.findViewById(R.id.cuotaSaldoVw)).setText("$"+((TextView) layout.findViewById(R.id.cuotaSaldo)).getText().toString());
+                ((TextView) convertView.findViewById(R.id.clienteVw)).setText(((EditText) layout.findViewById(R.id.cliente)).getText().toString());
         Toast.makeText(context, "Financiamieno Editado", Toast.LENGTH_SHORT).show();
 
     }
@@ -609,7 +611,6 @@ public class Financiamiento {
                   String tasa, String plazo1, String plazo2,String plazo3,
                   String precio, String img_fach,String img_pb,String img_pa1,String img_pa2,
                   String urbanizacion,String lote, String manzana,String id_lote*/
-                System.out.println(sModelo.getString(0));
                 modelo = new Modelo(idModelo[0], sModelo.getString(0), sModelo.getString(1), sModelo.getString(2), sModelo.getString(3),
                         sModelo.getString(4), sModelo.getString(5), sModelo.getString(6), sModelo.getString(7), sModelo.getString(8),
                         sModelo.getString(9), sModelo.getString(10), sModelo.getString(11), sModelo.getString(12), sModelo.getString(13),

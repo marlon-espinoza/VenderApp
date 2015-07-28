@@ -24,7 +24,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:icon="@drawable/ciudad_celeste_logo_icon">
+            android:icon="@drawable/ciudad_celeste_logo_icon"
+            android:configChanges="orientation|screenSize">
 
         </activity>
 
@@ -40,7 +41,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_application"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +51,8 @@
         <activity
             android:name=".Activity_Lotes"
             android:label="@string/title_activity_activity__lotes"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -59,7 +61,8 @@
         <activity
             android:name=".Activity_Modelos"
             android:label="@string/title_activity_activity_modelos"
-            android:parentActivityName=".Activity_Lotes">
+            android:parentActivityName=".Activity_Lotes"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.usuario.venderapp.Activity_Lotes" />

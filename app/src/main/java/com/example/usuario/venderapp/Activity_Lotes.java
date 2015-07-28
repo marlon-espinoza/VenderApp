@@ -17,14 +17,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbLote;
+import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
 
 import java.io.BufferedInputStream;
@@ -61,11 +66,25 @@ public class Activity_Lotes extends ActionBarActivity {
     private View mLoadingView;
     private int mShortAnimationDuration;
     String path=null;
+    private String array_spinner[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lotes);
         Intent intent= getIntent();
+
+        array_spinner=new String[2];
+        array_spinner[0]="Modelos";
+        array_spinner[1]="Solar";
+
+        Spinner s = (Spinner) findViewById(R.id.spinner_vender_como);
+        ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, array_spinner);
+        s.setAdapter(adapter);
+
+
+
         id=intent.getStringExtra("id_urb");
         nombreUrb=(TextView)findViewById(R.id.nombre_urbanizacion);
         nombreUrb.setText(intent.getStringExtra("nombre_urb"));
@@ -73,7 +92,8 @@ public class Activity_Lotes extends ActionBarActivity {
         mImageView = (ImageView) findViewById(R.id.image_view);
         mLoadingView = findViewById(R.id.loading_spinner);
         mLoadingView.setVisibility(View.GONE);
-
+        final TableLayout tb=(TableLayout)findViewById(R.id.tablaLotes);
+        final String nombre_urb=intent.getStringExtra("nombre_urb");
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
         fallido=(TextView)findViewById(R.id.fallida);
@@ -98,18 +118,39 @@ public class Activity_Lotes extends ActionBarActivity {
                 }
             });
         }
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            public void onClick(View v) {
+            }
 
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View view,
+                                       int position, long row_id) {
+                switch(position){
+                    case 0:
+                        lotesPorVenderComo(tb,position+1,nombre_urb);
+                        break;
+                    case 1:
+                        lotesPorVenderComo(tb,position+1,nombre_urb);
+                        break;
+                }
 
+            }
 
-        TableLayout tb=(TableLayout)findViewById(R.id.tablaLotes);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+    }
+    private void lotesPorVenderComo(TableLayout tb,int opcion,String nombre_urb){
         list=new ArrayList<String[]>();
         DbLote dbLote=null;
+        if(tb.getChildCount()>2)tb.removeViews(2,tb.getChildCount()-2);
         try {
             dbLote = new DbLote(this);
-            Cursor dato = dbLote.consultarLotePorProy(id);
-            final String urbanizacion=intent.getStringExtra("nombre_urb");
-
+            Cursor dato = dbLote.consultarLotePorProyYVenderComo(id,opcion);
+            //final String urbanizacion=intent.getStringExtra("nombre_urb");
+            final String urbanizacion=nombre_urb;
             if (dato.moveToFirst()) {
                 findViewById(android.R.id.empty).setVisibility(View.GONE);
                 int i=0;
@@ -120,6 +161,7 @@ public class Activity_Lotes extends ActionBarActivity {
                     final String idLote=dato.getString(0);
                     final String manzana=dato.getString(1);
                     final String lote=dato.getString(2);
+                    final String vender_como=dato.getString(7);
                     final String area=decimales.format(Double.parseDouble(dato.getString(5)));
                     TextView tv;
                     if(i%2==1)tr.setBackgroundResource(R.drawable.selector_lista_con_azul);
@@ -137,17 +179,87 @@ public class Activity_Lotes extends ActionBarActivity {
                     tv.setText(dato.getString(6));
                     tb.addView(tr);
                     registerForContextMenu(tr);
-                    tr.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getApplicationContext(), Activity_Modelos.class);
-                            intent.putExtra("id_lote", idLote);
-                            intent.putExtra("manzana",manzana);
-                            intent.putExtra("lote",lote);
-                            intent.putExtra("urbanizacion",urbanizacion);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            getApplicationContext().startActivity(intent);                       }
-                    });
+                    if(vender_como.equals("1")) {
+                        DbModelo dbModelo=null;
+                        try {
+                            dbModelo = new DbModelo(this);
+                            final Cursor dato1 = dbModelo.consultar(idLote+vender_como);
+                            if (dato1.moveToFirst()) {
+                                tr.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), Activity_Modelos.class);
+                                        intent.putExtra("id_lote", idLote + vender_como);
+                                        intent.putExtra("manzana", manzana);
+                                        intent.putExtra("lote", lote);
+                                        intent.putExtra("urbanizacion", urbanizacion);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        getApplicationContext().startActivity(intent);
+                                    }
+                                });
+                            }
+                            else{
+                                tr.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Toast.makeText(getApplicationContext(), "Lote no tiene modelos disponibles por el momento", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+
+                        }catch (Exception e){
+                            System.out.println(e.toString());
+                        }finally {
+                            if(dbModelo!=null)
+                                dbModelo.close();
+                        }
+
+                    }
+                    else{
+                        DbModelo dbModelo=null;
+                        try {
+                            dbModelo = new DbModelo(this);
+                            final Cursor dato1 = dbModelo.consultar(idLote+vender_como);
+
+                            if (dato1.moveToFirst()) {
+                                findViewById(android.R.id.empty).setVisibility(View.GONE);
+                                //Recorremos el cursor hasta que no haya más registros
+
+                                final String[] modelo=new String[]{dato1.getString(0),dato1.getString(1),dato1.getString(2),dato1.getString(3),dato1.getString(4),
+                                        dato1.getString(5),dato1.getString(6),dato1.getString(7),dato1.getString(8),dato1.getString(9),dato1.getString(10),
+                                        dato1.getString(11),dato1.getString(12),dato1.getString(13),dato1.getString(14),urbanizacion,lote,manzana,idLote};
+
+
+
+                                tr.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //mostrarFinanciamiento(Activity_Modelos.this,modelo);
+                                        Financiamiento financiamiento=new Financiamiento(Activity_Lotes.this, modelo);
+                                        financiamiento.mostrar();
+                                    }
+                                });
+                                registerForContextMenu(tr);
+
+                            }
+                            else{
+                                tr.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //mostrarFinanciamiento(Activity_Modelos.this,modelo);
+                                        Toast.makeText(getApplicationContext(), "Solar no disponible por el momento", Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+                            }
+
+                            }catch (Exception e){
+                                System.out.println(e.toString());
+                            }finally {
+                                if(dbModelo!=null)
+                                    dbModelo.close();
+                            }
+                    }
                     i++;
                 } while(dato.moveToNext());
             }
@@ -158,9 +270,6 @@ public class Activity_Lotes extends ActionBarActivity {
             if(dbLote!=null)
                 dbLote.close();
         }
-
-
-
     }
 
 

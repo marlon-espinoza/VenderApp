@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="5dp"
-                        android:background="#0066ff">
+                        android:background="@color/azul_theme">
                         <TextView
                             android:text="Seleccione un modelo"
                             android:gravity="center"
@@ -105,7 +105,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:background="@color/azul">
                         <TextView
                             android:text="Modelo"
                             android:gravity="center"

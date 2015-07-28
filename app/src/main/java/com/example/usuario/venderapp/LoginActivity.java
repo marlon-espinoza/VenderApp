@@ -205,7 +205,7 @@ public class LoginActivity extends Activity {
                         public void run() {
                             //update ui here
                             Toast.makeText(getApplicationContext(), "Usuario Correcto", Toast.LENGTH_LONG).show();
-                            Toast.makeText(getApplicationContext(), "Estamos cargando tu información...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Estamos cargando tu información...Esto puede tardar unos minutos", Toast.LENGTH_LONG).show();
                             lMensaje.setVisibility(View.VISIBLE);
                         }
                     });
@@ -313,7 +313,10 @@ public class LoginActivity extends Activity {
                 " codigo_urbanizacion='2';";
         String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega,vender_como "+
                 "from dbo.vw_lotes_app where codigo_urbanizacion='2'";
-        String q_modelos="select * from dbo.vw_modelos_en_lot where codigo_lote='&PV_LOTE&'";
+        //String q_modelos="select * from dbo.vw_modelos_en_lot where codigo_lote='&PV_LOTE&'";
+        String q_modelos = "Select * from dbo.vw_modelos_en_lot_app m "+
+                " inner join dbo.vw_lotes_app l on l.codigo_lote = m.codigo_lote AND l.vender_como='&PV_VENDER_COMO&'"+
+                " where m.codigo_lote='&PV_LOTE&' and m.modelo'&PV_SOLAR&'";
         try{
             if(con.getActive()) {
                 rs=con.consulta(q_proyectos.replace("&PV_USER&", user));
@@ -329,7 +332,6 @@ public class LoginActivity extends Activity {
                 DbModelo modelo=new DbModelo(this);
                 rs=con.consulta(q_lotes);
                 while (rs.next()) {
-                    android.util.Log.w("vender", rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + " " + rs.getString(7) + " " + rs.getString(8) + " " + rs.getString(9));
                     lote.insertar(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 }
                 rs.close();
@@ -339,13 +341,17 @@ public class LoginActivity extends Activity {
                     if (dato.moveToFirst()) {
                         //Recorremos el cursor hasta que no haya más registros
                         do {
-                            System.out.println(dato.getString(0));
-                            rs=con.consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)));
+                            //System.out.println(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)));
+                            if (dato.getString(7).equals("1"))
+                                rs=con.consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'","<> 'SOLAR'"));
+
+                            else
+                                rs=con.consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'","= 'SOLAR'"));
                             while (rs.next()) {
 
                                 //db.insert(NOMBRE_TABLA,null,generarContentValues(modelo,id_lote,area,pisos,cuota_ent,cuota_ini,tasa,plazo1,
                                 //plazo2,plazo3,precio,img_fach,img_pb,img_pa1,img_pa2));
-                                modelo.insertar(rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+                                modelo.insertar(rs.getString(2),rs.getString(1)+ dato.getString(7),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
                                         rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13)
                                         ,rs.getString(14),rs.getString(15));
 

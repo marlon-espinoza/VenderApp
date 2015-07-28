@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DbLote {
     public static final  String NOMBRE_TABLA = "lote";
     public static final  String ID_LOTE = "_id";
+    public static final  String CODIGO_LOTE = "codigo_lote";
     public static final  String MANZANA = "manzana";
     public static final  String NUM_LOTE = "numero_lote";
     public static final  String ESTADO = "estado_construccion";
@@ -28,8 +29,9 @@ public class DbLote {
     private SQLiteDatabase db;
 
     public static final String CREATE_TABLE = "create table "+NOMBRE_TABLA+" ("
-            + ID_LOTE + " integer primary key,"
-            + ID_PROY + " tex not null,"
+            + ID_LOTE + " text primary key,"
+            + CODIGO_LOTE + " text not null, "
+            + ID_PROY + " text not null,"
             + MANZANA + " text not null,"
             + NUM_LOTE + " text not null,"
             + ESTADO + " text not null,"
@@ -43,11 +45,12 @@ public class DbLote {
         helper = new DbHelper(contexto);
         db = helper.getWritableDatabase();
     }
-    public ContentValues generarContentValues(String id,String id_proy,String manzana, String num_lote, String estado,
+    public ContentValues generarContentValues(String codigo_lote,String id_proy,String manzana, String num_lote, String estado,
                                               String area, String entrada, String salida,String vender_como){
         ContentValues valores = new ContentValues();
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        valores.put(ID_LOTE,id);
+        valores.put(ID_LOTE,codigo_lote+vender_como);
+        valores.put(CODIGO_LOTE,codigo_lote);
         valores.put(ID_PROY,id_proy);
         valores.put(MANZANA,manzana);
         valores.put(NUM_LOTE,num_lote);
@@ -66,7 +69,7 @@ public class DbLote {
     public Cursor consultar(String id){
         //insert  into contactos
 
-        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ESTADO,AREA,ENTRADA, ENTREGA,VENDER_COMO};
+        String[] campos = new String[] {CODIGO_LOTE,MANZANA,NUM_LOTE,ESTADO,AREA,ENTRADA, ENTREGA,VENDER_COMO};
         String[] args = new String[] {id};
         //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
         //System.out.println("id del curso: "+id);
@@ -76,12 +79,22 @@ public class DbLote {
     public Cursor consultarLotePorProy(String id){
         //insert  into contactos
 
-        String[] campos = new String[] {ID_LOTE,MANZANA,NUM_LOTE,ENTRADA, ENTREGA,AREA,ESTADO};
+        String[] campos = new String[] {CODIGO_LOTE,MANZANA,NUM_LOTE,ENTRADA, ENTREGA,AREA,ESTADO,VENDER_COMO};
         String[] args = new String[] {id};
         //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
         //System.out.println("id del curso: "+id);
         if(id==null)return db.query(NOMBRE_TABLA, campos, null, null, null, null, null);
         return db.query(NOMBRE_TABLA, campos, ID_PROY+"=?", args, null, null, null);
+    }
+    public Cursor consultarLotePorProyYVenderComo(String id,int vender_como){
+        //insert  into contactos
+
+        String[] campos = new String[] {CODIGO_LOTE,MANZANA,NUM_LOTE,ENTRADA, ENTREGA,AREA,ESTADO,VENDER_COMO};
+        String[] args = new String[] {id,new String(""+vender_como)};
+        //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
+        //System.out.println("id del curso: "+id);
+        if(id==null)return db.query(NOMBRE_TABLA, campos, null, null, null, null, null);
+        return db.query(NOMBRE_TABLA, campos, ID_PROY+"=? AND "+VENDER_COMO+"=?", args, null, null, null);
     }
 
 
