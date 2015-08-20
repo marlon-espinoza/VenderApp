@@ -30,6 +30,7 @@ public class DbFinanciamiento {
     public static final  String NUM_PAGOS_SALDO = "num_pagos_saldo";
     public static final  String CUOTA_SALDO = "cuota_saldo";
     public static final  String CLIENTE = "cliente";
+    public static final  String VENDER_COMO = "vender_como";
     public static final  String ID_MODELO = "modelo_id";
     public static final  String FECHA = "fecha_financiamiento";
 
@@ -61,6 +62,7 @@ public class DbFinanciamiento {
             + TASA_INTERES + " text not null,"
             + NUM_PAGOS_SALDO + " text not null,"
             + CUOTA_SALDO + " text not null,"
+            + VENDER_COMO + " null,"
             + CLIENTE + " text null,"
             + FECHA +" TIMESTAMP NOT NULL);";
 
@@ -72,7 +74,7 @@ public class DbFinanciamiento {
                                               String manzana,String precio, String entrada,
                                               String porcentaje_entrada,String cuota_inicial, String porcentaje_cuota_inicial,
                                               String num_pagos_entrada,String cuota_entrada,String saldo,String tasa_interes,
-                                              String num_pagos_saldo,String cuota_saldo,String cliente, Date fecha){
+                                              String num_pagos_saldo,String cuota_saldo,String vender_como,String cliente, Date fecha){
         ContentValues valores = new ContentValues();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         valores.put(ID_MODELO,id_modelo);
@@ -92,6 +94,7 @@ public class DbFinanciamiento {
         valores.put(NUM_PAGOS_SALDO,num_pagos_saldo);
         valores.put(CUOTA_SALDO,cuota_saldo);
         valores.put(CLIENTE,cliente);
+        valores.put(VENDER_COMO,vender_como);
         valores.put(FECHA,dateFormat.format(fecha));
 
         return valores;
@@ -122,18 +125,18 @@ public class DbFinanciamiento {
                          String manzana,String precio, String entrada,
                          String porcentaje_entrada,String cuota_inicial, String porcentaje_cuota_inicial,
                          String num_pagos_entrada,String cuota_entrada,String saldo,String tasa_interes,
-                         String num_pagos_saldo,String cuota_saldo,String cliente, Date fecha){
+                         String num_pagos_saldo,String cuota_saldo,String vender_como,String cliente, Date fecha){
         //insert  into contactos
         db.insert(NOMBRE_TABLA,null,generarContentValues(id_modelo,nombre_modelo,urbanizacion,lote,manzana,precio,entrada,
                 porcentaje_entrada,cuota_inicial,porcentaje_cuota_inicial,num_pagos_entrada,cuota_entrada,saldo,tasa_interes,
-                num_pagos_saldo,cuota_saldo,cliente,fecha));
+                num_pagos_saldo,cuota_saldo,vender_como,cliente,fecha));
     }
     public Cursor consultar(String id){
         //insert  into contactos
 
         String[] campos = new String[] {ID_FINANCIAMIENTO,ID_MODELO,NOMBRE_MODELO,URBANIZACION,LOTE,MANZANA,PRECIO,ENTRADA,
                 PORCENTAJE_ENTRADA,CUOTA_INICIAL,PORCENTAJE_CUOTA_INICIAL,NUM_PAGOS_ENTRADA,CUOTA_ENTRADA,SALDO,TASA_INTERES,
-                NUM_PAGOS_SALDO,CUOTA_SALDO,CLIENTE,FECHA};
+                NUM_PAGOS_SALDO,CUOTA_SALDO,VENDER_COMO,CLIENTE,FECHA};
         String[] args = new String[] {id};
         //Cursor c = db.query(TABLE_NAME, campos, "usuario=?(where)", args(para el where), group by, having, order by, num);
         //System.out.println("id del curso: "+id);
@@ -155,6 +158,8 @@ public class DbFinanciamiento {
     public void vaciar(){
         db.delete(NOMBRE_TABLA,null,null);
     }
+    public void drop(){ db.execSQL("Drop table "+NOMBRE_TABLA+";");}
+    public void create(){db.execSQL(CREATE_TABLE);}
 
     public void close(){
         try {

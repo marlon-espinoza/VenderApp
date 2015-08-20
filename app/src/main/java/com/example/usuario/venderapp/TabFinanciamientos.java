@@ -48,16 +48,16 @@ public class TabFinanciamientos extends Fragment {
              if (dato.moveToFirst()) {
                  //Recorremos el cursor hasta que no haya más registros
                  do {
-                     /*ID_FINANCIAMIENTO,ID_MODELO,NOMBRE_MODELO,URBANIZACION,LOTE,MANZANA,PRECIO,ENTRADA,
-                PORCENTAJE_ENTRADA,CUOTA_INICIAL,PORCENTAJE_CUOTA_INICIAL,NUM_PAGOS_ENTRADA,CUOTA_ENTRADA,SALDO,TASA_INTERES,
-                NUM_PAGOS_SALDO,CUOTA_SALDO,CLIENTE,FECHA*/
+                     /*0 ID_FINANCIAMIENTO,1 ID_MODELO,2 NOMBRE_MODELO,3 URBANIZACION,4 LOTE,5 MANZANA,6 PRECIO,7 ENTRADA,
+                8 PORCENTAJE_ENTRADA,9 CUOTA_INICIAL,10 PORCENTAJE_CUOTA_INICIAL,11 NUM_PAGOS_ENTRADA,12 CUOTA_ENTRADA,13 SALDO,14 TASA_INTERES,
+                15 NUM_PAGOS_SALDO,16 CUOTA_SALDO,17 VENDER_COMO,18 CLIENTE,19 FECHA*/
                      System.out.println(dato.getString(0)+" "+dato.getString(1)+" "+dato.getString(2)+" "+
                              dato.getString(3)+" "+dato.getString(4)+" "+dato.getString(5)+" "+dato.getString(6)+" "+dato.getString(7)+" "+dato.getString(8)+" "+
                              dato.getString(9)+" "+dato.getString(10)+" "+dato.getString(11)+" "+dato.getString(12)+" "+dato.getString(13)+" "+
                              dato.getString(14)+" "+dato.getString(15)+" "+dato.getString(16)+" "+dato.getString(17)+" "+dato.getString(18));
 
                      financiamientos.add(new String[]{dato.getString(0),dato.getString(2),dato.getString(3),dato.getString(4),
-                             dato.getString(5),dato.getString(6),dato.getString(12),dato.getString(16),dato.getString(17),dato.getString(18)});
+                             dato.getString(5),dato.getString(6),dato.getString(12),dato.getString(16),dato.getString(17),dato.getString(18),dato.getString(19)});
 
 
                  } while(dato.moveToNext());

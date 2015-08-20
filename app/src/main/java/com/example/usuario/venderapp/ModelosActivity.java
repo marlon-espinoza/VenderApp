@@ -19,24 +19,22 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.ClaseTramite.Modelo;
 import com.example.usuario.venderapp.adapters.ImagenModeloAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 
-public class Activity_Modelos extends ActionBarActivity {
+public class ModelosActivity extends ActionBarActivity {
     ArrayList<String[]> list;
     private String idLote;
     String path=null;
     String IMAGEN_1="fachada";
     String IMAGEN_2="planta1";
     String IMAGEN_3="planta2";
+    DecimalFormat fomatoPrecio=new DecimalFormat("###,###.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +44,11 @@ public class Activity_Modelos extends ActionBarActivity {
         idLote = intent.getStringExtra("id_lote");
         String lote = intent.getStringExtra("lote");
         String manzana = intent.getStringExtra("manzana");
-        String[] urbanizacion = intent.getStringExtra("urbanizacion").split("\\(");
+        String urbanizacion = intent.getStringExtra("urbanizacion");
         TableLayout tb = (TableLayout) findViewById(R.id.tablaModelos);
         ((TextView)findViewById(R.id.manzana_modelo)).setText(manzana);
         ((TextView)findViewById(R.id.lote_modelo)).setText(lote);
-        ((TextView)findViewById(R.id.urbanizacion)).setText(urbanizacion[0]);
+        ((TextView)findViewById(R.id.urbanizacion)).setText(urbanizacion);
 
 
         list = new ArrayList<String[]>();
@@ -73,7 +71,7 @@ public class Activity_Modelos extends ActionBarActivity {
                     Button btn;
                     final String[] modelo=new String[]{dato.getString(0),dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
                             dato.getString(5),dato.getString(6),dato.getString(7),dato.getString(8),dato.getString(9),dato.getString(10),
-                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14),urbanizacion[0],lote,manzana,idLote};
+                            dato.getString(11),dato.getString(12),dato.getString(13),dato.getString(14),urbanizacion,lote,manzana,idLote,Financiamiento.COMO_MODELO};
 
                     final String id_modelo=dato.getString(0);
                     final String[] nImagenes={dato.getString(11),dato.getString(12),dato.getString(13)};
@@ -88,14 +86,14 @@ public class Activity_Modelos extends ActionBarActivity {
                     tv.setText(dato.getString(3));
                     tv = (TextView) tr.findViewById(R.id.precio);
                     valor=Double.parseDouble(dato.getString(10));
-                    tv.setText(decimales.format(valor));
+                    tv.setText(fomatoPrecio.format(valor));
                     tb.addView(tr);
                     btn=(Button)tr.findViewById(R.id.botonFachada);
                     btn.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
-                            mostrarPopupModelos(Activity_Modelos.this, modelo);
+                            mostrarPopupModelos(ModelosActivity.this, modelo);
 
                         }
                     });
@@ -103,7 +101,7 @@ public class Activity_Modelos extends ActionBarActivity {
                         @Override
                         public void onClick(View v) {
                             //mostrarFinanciamiento(Activity_Modelos.this,modelo);
-                            Financiamiento financiamiento=new Financiamiento(Activity_Modelos.this, modelo);
+                            Financiamiento financiamiento=new Financiamiento(ModelosActivity.this, modelo);
                             financiamiento.mostrar();
                         }
                     });
@@ -136,6 +134,9 @@ public class Activity_Modelos extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }else if (id==android.R.id.home) {
             finish();
@@ -154,7 +155,7 @@ public class Activity_Modelos extends ActionBarActivity {
 
         final Modelo modelo=new Modelo(sModelo[0],sModelo[1],sModelo[2],sModelo[3],sModelo[4],
                 sModelo[5],sModelo[6],sModelo[7],sModelo[8],sModelo[9],sModelo[10],
-                sModelo[11],sModelo[12],sModelo[13],sModelo[14],sModelo[15],sModelo[16],sModelo[17],idLote);
+                sModelo[11],sModelo[12],sModelo[13],sModelo[14],sModelo[15],sModelo[16],sModelo[17],idLote,Financiamiento.COMO_MODELO);
         //inflate layout popup
         LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupModelos);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -182,7 +183,7 @@ public class Activity_Modelos extends ActionBarActivity {
         builder.setPositiveButton("FINANCIAR",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Financiamiento financiamiento=new Financiamiento(Activity_Modelos.this,sModelo);
+                        Financiamiento financiamiento=new Financiamiento(ModelosActivity.this,sModelo);
                         financiamiento.mostrar();
                     }
                 });

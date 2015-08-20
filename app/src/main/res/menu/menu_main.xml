@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/actualizar" android:title="Actualizar"
+    <item android:id="@+id/actualizar" android:title=""
         android:orderInCategory="1" app:showAsAction="always|withText"
         android:icon="@android:drawable/stat_notify_sync_noanim">
         <menu>
@@ -10,8 +10,13 @@
             />
         </menu>
     </item>
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/cerrar" android:title="Cerrar"
-        android:orderInCategory="2"/>
+    <item android:id="@+id/action_settings" android:title=""
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        android:orderInCategory="100" app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/cerrar" android:title="Cerrar"
+                android:orderInCategory="2"/>
+        </menu>
+    </item>
+
 </menu>

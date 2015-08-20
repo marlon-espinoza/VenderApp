@@ -2,11 +2,10 @@ package com.example.usuario.venderapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
 
 import com.example.usuario.venderapp.Financiamiento;
@@ -29,13 +28,16 @@ public class ListaFinanciamientoAdapter extends SWAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final String[] dato=(String[]) getItem(position);
+        /*0 ID_FINANCIAMIENTO,1 ID_MODELO,2 NOMBRE_MODELO,3 URBANIZACION,4 LOTE,5 MANZANA,6 PRECIO,7 ENTRADA,
+                8 PORCENTAJE_ENTRADA,9 CUOTA_INICIAL,10 PORCENTAJE_CUOTA_INICIAL,11 NUM_PAGOS_ENTRADA,12 CUOTA_ENTRADA,
+                13 SALDO,TASA_INTERES,14 NUM_PAGOS_SALDO,15 CUOTA_SALDO,16 VENDER_COMO,17 CLIENTE,18 FECHA*/
         final String[] datosModelo=new String[]{dato[1],dato[2],dato[3],dato[4]};
-        /*Financiamiento financiamiento=new Financiamiento(dato.getString(0),dato.getString(1),dato.getString(2),
-                dato.getString(3),dato.getString(4),dato.getString(5),dato.getString(6),dato.getString(7),dato.getString(8),
-                dato.getString(9),dato.getString(10),dato.getString(11),dato.getString(12),dato.getString(13),
-                dato.getString(14),dato.getString(15),dato.getString(16),dato.getString(17),dato.getString(18));*/
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.financiamiento_view,parent,false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.financiamiento_view_modelo,parent,false);
+        }
+        if(dato[8].equals("1")){
+            (convertView.findViewById(R.id.titulo)).setBackgroundColor(getContext().getResources().getColor(R.color.verde));
         }
         ((TextView) convertView.findViewById(R.id.modeloVw)).setText(dato[1]);
         ((TextView) convertView.findViewById(R.id.urbanizacionVw)).setText(dato[2]);
@@ -44,8 +46,8 @@ public class ListaFinanciamientoAdapter extends SWAdapter {
         ((TextView) convertView.findViewById(R.id.precioVw)).setText("$"+dato[5]);
         ((TextView) convertView.findViewById(R.id.cuotaEntradaVw)).setText("$"+dato[6]);
         ((TextView) convertView.findViewById(R.id.cuotaSaldoVw)).setText("$"+dato[7]);
-        ((TextView) convertView.findViewById(R.id.clienteVw)).setText(dato[8]);
-        ((TextView) convertView.findViewById(R.id.fechaVw)).setText(dato[9]);
+        ((TextView) convertView.findViewById(R.id.clienteVw)).setText(dato[9]);
+        ((TextView) convertView.findViewById(R.id.fechaVw)).setText(dato[10]);
 
         final View finalConvertView = convertView;
         convertView.setOnClickListener(new View.OnClickListener() {

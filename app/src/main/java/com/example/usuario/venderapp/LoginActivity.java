@@ -2,6 +2,7 @@ package com.example.usuario.venderapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -93,7 +94,7 @@ public class LoginActivity extends Activity {
                 if (is_log) {
                     mAuthTask.cancel(true);
                     mButton.setText(getString(R.string.action_cancel2));
-                    mButton.setEnabled(false);
+                    //mButton.setEnabled(false);
                 } else {
 
                     if(comprobar_campos())return;
@@ -185,7 +186,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    public String login(String usuario,String pass, final LinearLayout lMensaje) {
+    public String login(String usuario,String pass,ProgressDialog progress) {
         MyConnection con = null;
         ResultSet rs = null;
         String bool="false";
@@ -206,10 +207,9 @@ public class LoginActivity extends Activity {
                             //update ui here
                             Toast.makeText(getApplicationContext(), "Usuario Correcto", Toast.LENGTH_LONG).show();
                             Toast.makeText(getApplicationContext(), "Estamos cargando tu información...Esto puede tardar unos minutos", Toast.LENGTH_LONG).show();
-                            lMensaje.setVisibility(View.VISIBLE);
                         }
                     });
-                    getInformacion(con, usuario);
+                    con.actualizarDatos(getApplicationContext(),usuario,progress);
 
                 }
                 else bool="false";
@@ -232,7 +232,7 @@ public class LoginActivity extends Activity {
         private final String mEmail;
         private final String mPassword;
         private final LinearLayout mMensajeCargando;
-
+        ProgressDialog progressDoalog;
 
         UserLoginTask(String email, String password, LinearLayout mMensajeCargando) {
             mEmail = email;
@@ -246,7 +246,13 @@ public class LoginActivity extends Activity {
             mUser.setEnabled(false);
             LoginActivity.this.mPassword.setEnabled(false);
             mButton.setClickable(false);
-            //mButton.setText("Cancelar");
+            progressDoalog = new ProgressDialog(LoginActivity.this);
+            progressDoalog.setMax(100);
+            progressDoalog.setMessage("Cargando urbanizaciones, lotes y modelos...");
+            progressDoalog.setTitle("Iniciando");
+            progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDoalog.setCanceledOnTouchOutside(false);
+            progressDoalog.show();
         }
 
         @Override
@@ -254,7 +260,7 @@ public class LoginActivity extends Activity {
             // TODO: attempt authentication against a network service.
             mProgress.setProgress(0);
             log_bool = null;
-            log_bool = login(params[0], params[1],mMensajeCargando);
+            log_bool = login(params[0], params[1],progressDoalog);
             //log_bool="true";
             if(log_bool.equalsIgnoreCase("true"));
 
@@ -305,83 +311,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private void getInformacion(MyConnection con, String user){
 
-        ResultSet rs=null;
-        String q_urbanizaciones="select * from dbo.vw_user_urb where usuario= '&PV_USER&'";
-        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy where usuario='&PV_USER&' and"+
-                " codigo_urbanizacion='2';";
-        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega,vender_como "+
-                "from dbo.vw_lotes_app where codigo_urbanizacion='2'";
-        //String q_modelos="select * from dbo.vw_modelos_en_lot where codigo_lote='&PV_LOTE&'";
-        String q_modelos = "Select * from dbo.vw_modelos_en_lot_app m "+
-                " inner join dbo.vw_lotes_app l on l.codigo_lote = m.codigo_lote AND l.vender_como='&PV_VENDER_COMO&'"+
-                " where m.codigo_lote='&PV_LOTE&' and m.modelo'&PV_SOLAR&'";
-        try{
-            if(con.getActive()) {
-                rs=con.consulta(q_proyectos.replace("&PV_USER&", user));
-                DbProyecto proy;
-                proy=new DbProyecto(this);
-                while (rs.next()) {
-                    //insertar(String id,String id_curso,String nombre_curso,String titulo,String contenido,Date fecha,String num_msgs)
-                    proy.insertar(rs.getString(1),rs.getString(2));
-                }
-                rs.close();
-                rs=null;
-                DbLote lote=new DbLote(this);
-                DbModelo modelo=new DbModelo(this);
-                rs=con.consulta(q_lotes);
-                while (rs.next()) {
-                    lote.insertar(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
-                }
-                rs.close();
-                rs=null;
-                try {
-                    Cursor dato = lote.consultarLotePorProy(null);
-                    if (dato.moveToFirst()) {
-                        //Recorremos el cursor hasta que no haya más registros
-                        do {
-                            //System.out.println(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)));
-                            if (dato.getString(7).equals("1"))
-                                rs=con.consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'","<> 'SOLAR'"));
-
-                            else
-                                rs=con.consulta(q_modelos.replace("&PV_LOTE&", dato.getString(0)).replace("&PV_VENDER_COMO&", dato.getString(7)).replace("'&PV_SOLAR&'","= 'SOLAR'"));
-                            while (rs.next()) {
-
-                                //db.insert(NOMBRE_TABLA,null,generarContentValues(modelo,id_lote,area,pisos,cuota_ent,cuota_ini,tasa,plazo1,
-                                //plazo2,plazo3,precio,img_fach,img_pb,img_pa1,img_pa2));
-                                modelo.insertar(rs.getString(2),rs.getString(1)+ dato.getString(7),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
-                                        rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13)
-                                        ,rs.getString(14),rs.getString(15));
-
-                            }
-                            rs.close();
-                            rs=null;
-
-                        } while(dato.moveToNext());
-                    }
-
-                }catch (Exception e){
-                    System.out.println(e.toString());
-                }
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-            try {
-
-                if(con!=null)
-                    con.close();
-                if(rs!=null)
-                    rs.close();
-            } catch (SQLException ex) {
-                //Logger.getLogger(consulta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }
 
 }

@@ -18,7 +18,7 @@
             android:textSize="@dimen/abc_text_size_title_material"
             />
         <Spinner
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_vender_como"
             android:gravity="right"
@@ -65,7 +65,9 @@
                 style="?android:progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
             <TextView
                 android:id="@+id/fallida"
                 android:layout_width="fill_parent"
@@ -173,7 +175,16 @@
         </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
-
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_lotes"
+        android:gravity="right"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:layout_marginLeft="@dimen/login_horizontal_margin"
+        android:layout_marginRight="@dimen/login_horizontal_margin"
+        android:layout_marginBottom="10dp"
+        />
     <TextView android:id="@android:id/empty"
         style="@style/Base.TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"

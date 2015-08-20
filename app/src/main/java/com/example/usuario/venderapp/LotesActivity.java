@@ -19,9 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -53,7 +51,7 @@ import java.util.ArrayList;
     ser almacenada con el id de la urbanizacion y con extensión jpg.
 
 */
-public class Activity_Lotes extends ActionBarActivity {
+public class LotesActivity extends ActionBarActivity {
     ArrayList<String[]> list;
     private String id;
     private TextView fallido;
@@ -150,7 +148,7 @@ public class Activity_Lotes extends ActionBarActivity {
             dbLote = new DbLote(this);
             Cursor dato = dbLote.consultarLotePorProyYVenderComo(id,opcion);
             //final String urbanizacion=intent.getStringExtra("nombre_urb");
-            final String urbanizacion=nombre_urb;
+            final String[] urbanizacion=nombre_urb.split("\\(");
             if (dato.moveToFirst()) {
                 findViewById(android.R.id.empty).setVisibility(View.GONE);
                 int i=0;
@@ -179,6 +177,7 @@ public class Activity_Lotes extends ActionBarActivity {
                     tv.setText(dato.getString(6));
                     tb.addView(tr);
                     registerForContextMenu(tr);
+                    //Vender por modelos
                     if(vender_como.equals("1")) {
                         DbModelo dbModelo=null;
                         try {
@@ -188,11 +187,11 @@ public class Activity_Lotes extends ActionBarActivity {
                                 tr.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getApplicationContext(), Activity_Modelos.class);
+                                        Intent intent = new Intent(getApplicationContext(), ModelosActivity.class);
                                         intent.putExtra("id_lote", idLote + vender_como);
                                         intent.putExtra("manzana", manzana);
                                         intent.putExtra("lote", lote);
-                                        intent.putExtra("urbanizacion", urbanizacion);
+                                        intent.putExtra("urbanizacion", urbanizacion[0]);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getApplicationContext().startActivity(intent);
                                     }
@@ -215,6 +214,7 @@ public class Activity_Lotes extends ActionBarActivity {
                         }
 
                     }
+                    //Vender por lotes
                     else{
                         DbModelo dbModelo=null;
                         try {
@@ -227,7 +227,7 @@ public class Activity_Lotes extends ActionBarActivity {
 
                                 final String[] modelo=new String[]{dato1.getString(0),dato1.getString(1),dato1.getString(2),dato1.getString(3),dato1.getString(4),
                                         dato1.getString(5),dato1.getString(6),dato1.getString(7),dato1.getString(8),dato1.getString(9),dato1.getString(10),
-                                        dato1.getString(11),dato1.getString(12),dato1.getString(13),dato1.getString(14),urbanizacion,lote,manzana,idLote};
+                                        dato1.getString(11),dato1.getString(12),dato1.getString(13),dato1.getString(14),urbanizacion[0],lote,manzana,idLote,Financiamiento.COMO_SOLAR};
 
 
 
@@ -235,7 +235,7 @@ public class Activity_Lotes extends ActionBarActivity {
                                     @Override
                                     public void onClick(View v) {
                                         //mostrarFinanciamiento(Activity_Modelos.this,modelo);
-                                        Financiamiento financiamiento=new Financiamiento(Activity_Lotes.this, modelo);
+                                        Financiamiento financiamiento=new Financiamiento(LotesActivity.this, modelo);
                                         financiamiento.mostrar();
                                     }
                                 });
@@ -276,7 +276,7 @@ public class Activity_Lotes extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_lotes, menu);
+        //getMenuInflater().inflate(R.menu.menu_activity_lotes, menu);
         return true;
     }
 

@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.usuario.venderapp.Activity_Lotes;
+import com.example.usuario.venderapp.Financiamiento;
+import com.example.usuario.venderapp.LotesActivity;
 import com.example.usuario.venderapp.R;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ListaUrbAdapter extends ArrayAdapter<String[]> {
         convertView.findViewById(R.id.urb).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Activity_Lotes.class);
+                Intent intent = new Intent(getContext(), LotesActivity.class);
                 intent.putExtra("id_urb", id);
                 intent.putExtra("nombre_urb",nombre_urb);
                 getContext().startActivity(intent);

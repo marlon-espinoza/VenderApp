@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
+import com.example.usuario.venderapp.DataBase.DbHelper;
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
@@ -77,13 +78,14 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         String user = "llaveUsuarioSIDWeb";
-
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
         switch (id) {
+
             case R.id.action_settings:
                 return true;
             case R.id.cerrar:
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
+
                 editor.clear();
                 editor.putString(user, sharedpreferences.getString(user, null));
                 editor.commit();
@@ -91,6 +93,10 @@ public class MainActivity extends ActionBarActivity {
                 Intent i = new Intent(this, LoginActivity.class);
                 startActivity(i);
                 this.finish();
+                /*DbFinanciamiento df = new DbFinanciamiento(this);
+                //df.drop();
+                df.create();*/
+
                 break;
             case R.id.actualizar_todo:
                 sharedpreferences=getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
