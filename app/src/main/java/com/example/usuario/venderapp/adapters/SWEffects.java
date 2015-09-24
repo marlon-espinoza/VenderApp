@@ -86,7 +86,6 @@ public class SWEffects {
     public static void undoAction(SWAdapter adapter ,@NonNull ViewGroup viewGroup,@NonNull int[] reverseSortedPositions){
         for (int position : reverseSortedPositions) {
             DbFinanciamiento dbFinanciamiento = new DbFinanciamiento(adapter.getContext());
-            System.out.println(((String[]) adapter.getItem(position))[0]);
             dbFinanciamiento.borrar(((String[]) adapter.getItem(position))[0]);
             adapter.remove(adapter.getItem(position));
         }

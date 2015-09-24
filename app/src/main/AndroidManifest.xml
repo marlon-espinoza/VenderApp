@@ -64,7 +64,7 @@
         </activity>
         <activity
             android:name=".Visor.SingleTouchImageViewActivity"
-            android:label="Visor de Urbanización"
+            android:label="Urbanización"
             android:parentActivityName=".LotesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,7 +73,7 @@
         </activity>
         <activity
             android:name=".Visor.ViewPagerActivity"
-            android:label="Visor de Modelos"
+            android:label="Modelo"
             android:parentActivityName=".ModelosActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

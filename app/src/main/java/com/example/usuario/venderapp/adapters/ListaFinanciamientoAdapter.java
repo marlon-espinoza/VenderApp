@@ -37,7 +37,7 @@ public class ListaFinanciamientoAdapter extends SWAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.financiamiento_view_modelo,parent,false);
         }
         if(dato[8].equals("1")){
-            (convertView.findViewById(R.id.titulo)).setBackgroundColor(getContext().getResources().getColor(R.color.verde));
+            (convertView.findViewById(R.id.titulo)).setBackgroundColor(getContext().getResources().getColor(R.color.azul3));
         }
         ((TextView) convertView.findViewById(R.id.modeloVw)).setText(dato[1]);
         ((TextView) convertView.findViewById(R.id.urbanizacionVw)).setText(dato[2]);

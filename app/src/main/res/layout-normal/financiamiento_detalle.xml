@@ -157,7 +157,7 @@
                                 android:textSize="15dp"
                                 android:textColor="@color/azul3"/>
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="75dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/entradra_detalle"
                                 android:textStyle="normal"
@@ -202,7 +202,7 @@
                                 android:textSize="15dp"
                                 android:textColor="@color/azul3"/>
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="75dp"
                                 android:layout_height="fill_parent"
                                 android:id="@+id/cuotaInicial_detalle"
                                 android:layout_gravity="center_vertical"

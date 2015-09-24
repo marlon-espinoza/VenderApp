@@ -34,6 +34,7 @@ public class ModelosActivity extends ActionBarActivity {
     String IMAGEN_1="fachada";
     String IMAGEN_2="planta1";
     String IMAGEN_3="planta2";
+    String id_urb;
     DecimalFormat fomatoPrecio=new DecimalFormat("###,###.##");
 
     @Override
@@ -45,6 +46,7 @@ public class ModelosActivity extends ActionBarActivity {
         String lote = intent.getStringExtra("lote");
         String manzana = intent.getStringExtra("manzana");
         String urbanizacion = intent.getStringExtra("urbanizacion");
+        id_urb = intent.getStringExtra("id_urb");
         TableLayout tb = (TableLayout) findViewById(R.id.tablaModelos);
         ((TextView)findViewById(R.id.manzana_modelo)).setText(manzana);
         ((TextView)findViewById(R.id.lote_modelo)).setText(lote);
@@ -165,9 +167,10 @@ public class ModelosActivity extends ActionBarActivity {
         ArrayList<String[]> list=new ArrayList<String[]>();
         list.add(new String[]{modelo.getId(),modelo.getNombre_modelo(),modelo.getImg_fachada(),IMAGEN_1});
         list.add(new String[]{modelo.getId(),modelo.getNombre_modelo(),modelo.getImg_pb(),IMAGEN_2});
-        list.add(new String[]{modelo.getId(),modelo.getNombre_modelo(),modelo.getImg_pa_1(),IMAGEN_3});
+        if(modelo.getPisos().equals("2"))
+            list.add(new String[]{modelo.getId(),modelo.getNombre_modelo(),modelo.getImg_pa_1(),IMAGEN_3});
 
-        imgAdp=new ImagenModeloAdapter(context,list);
+        imgAdp=new ImagenModeloAdapter(context,list,id_urb);
         grid.setAdapter(imgAdp);
 
         builder = new AlertDialog.Builder(context);

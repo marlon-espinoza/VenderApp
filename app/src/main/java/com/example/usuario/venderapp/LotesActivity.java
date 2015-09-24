@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
+import com.example.usuario.venderapp.DataBase.DbParametros;
 import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
 
 import java.io.BufferedInputStream;
@@ -56,8 +57,9 @@ public class LotesActivity extends ActionBarActivity {
     private String id;
     private TextView fallido;
     private TextView nombreUrb;
-    private String imageHttpAddress = "http://ciudadceleste.com/Apps/Images/arboleda.jpg";
+    private String imageHttpAddress;
     private String IMAGENES_LOTES = "ImagenesUrb";
+
 
     private boolean mContentLoaded;
     private ImageView mImageView;
@@ -71,7 +73,10 @@ public class LotesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lotes);
         Intent intent= getIntent();
+        //Se obtiene el id de la urbanizacion
+        id=intent.getStringExtra("id_urb");
 
+        //Se inicializa el Spinner para seleccionar vender los lotes por solar o por modelos
         array_spinner=new String[2];
         array_spinner[0]="Modelos";
         array_spinner[1]="Solar";
@@ -81,12 +86,28 @@ public class LotesActivity extends ActionBarActivity {
                 android.R.layout.simple_spinner_item, array_spinner);
         s.setAdapter(adapter);
 
+        //Se obtiene el parametro de la ruta donde estan alojadas las imagenes
+        DbParametros dbParametros=null;
+        try{
+            dbParametros= new DbParametros(this);
+            Cursor dato = dbParametros.consultar("0");
+            if (dato.moveToFirst())
+                imageHttpAddress = dato.getString(0);
+            dato = dbParametros.consultar(id);
+            if (dato.moveToFirst())
+                imageHttpAddress=imageHttpAddress.concat(dato.getString(0));
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }finally {
+            if(dbParametros!=null)
+                dbParametros.close();
+        }
 
 
-        id=intent.getStringExtra("id_urb");
+
+
         nombreUrb=(TextView)findViewById(R.id.nombre_urbanizacion);
         nombreUrb.setText(intent.getStringExtra("nombre_urb"));
-        //lv=(ListView)findViewById(R.id.listLotesView);
         mImageView = (ImageView) findViewById(R.id.image_view);
         mLoadingView = findViewById(R.id.loading_spinner);
         mLoadingView.setVisibility(View.GONE);
@@ -192,6 +213,7 @@ public class LotesActivity extends ActionBarActivity {
                                         intent.putExtra("manzana", manzana);
                                         intent.putExtra("lote", lote);
                                         intent.putExtra("urbanizacion", urbanizacion[0]);
+                                        intent.putExtra("id_urb",id);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getApplicationContext().startActivity(intent);
                                     }

@@ -37,14 +37,18 @@ public class Financiamiento {
         int height = displayMetrics.heightPixels;*/
     AlertDialog.Builder builder;
     final AlertDialog alertDialog;
-    int dialogWidth =600; // specify a value here
+    int dialogWidthNormal = 480;
+    int dialogWidthLarge = 600;
+    int dialogWidth; // specify a value here
     int dialogHeight =750; // specify a value here
     DecimalFormat formato=new DecimalFormat("");
     public static  String COMO_MODELO="0";
     public static  String COMO_SOLAR="1";
+    private Context context;
 
     //Nuevo Financiamiento
     public Financiamiento(final Activity context, String[] sModelo) {
+        this.context = context.getApplicationContext();
         /*String id,String modelo,String area,String pisos, String cuota_ent, String cuota_ini,
                   String tasa, String plazo1, String plazo2,String plazo3,
                   String precio, String img_fach,String img_pb,String img_pa1,String img_pa2,
@@ -94,6 +98,7 @@ public class Financiamiento {
     }
     //Mostrar Financiamiento
     public Financiamiento(final Activity context, final String id_financiamiento,String []sModelo,final View convertView) {
+        this.context = context.getApplicationContext();
         /*final Modelo modelo=new Modelo(sModelo[0],sModelo[1],sModelo[2],sModelo[3],sModelo[4],
                 sModelo[5],sModelo[6],sModelo[7],sModelo[8],sModelo[9],sModelo[10],
                 sModelo[11],sModelo[12],sModelo[13],sModelo[14],sModelo[15],sModelo[16],sModelo[17],sModelo[18]);*/
@@ -167,7 +172,7 @@ public class Financiamiento {
     }
     //Editar Financiamiento
     public Financiamiento(final Activity context, final String id_financiamiento,final View convertView){
-
+        this.context = context.getApplicationContext();
         final LinearLayout viewGroup=(LinearLayout)context.findViewById(R.id.popupFinanciamiento);
         LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View layout=layoutInflater.inflate(R.layout.financiamiento,viewGroup);
@@ -252,16 +257,17 @@ public class Financiamiento {
     }
 
     public void mostrar(){
-
-
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
+        if(width<=500)this.dialogWidth=dialogWidthNormal;
+        else dialogWidth=dialogWidthLarge;
         alertDialog.show();
         alertDialog.getWindow().setLayout(dialogWidth, dialogHeight);
 
     }
     void inicializarCampos(final Activity context,final Modelo modelo, final View layout){
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
+
         DecimalFormat decimales = new DecimalFormat("#.##");
         final double precio=Double.parseDouble(modelo.getPrecio().replace(",", "."));
         double entrada =(Double) precio*modelo.getCuota_entrada()/100;
@@ -269,7 +275,7 @@ public class Financiamiento {
         double cuota_inicial;
         int numPagosSaldo=120;
         final int[] numPagosEntrada = {25};
-        if(width<=500)this.dialogWidth=500;
+
 
         TextView tv=(TextView)layout.findViewById(R.id.precioFinanciamiento);
         tv.setText(modelo.getPrecio());

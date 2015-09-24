@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,55 +29,6 @@
                     android:padding="10dp">
                     <TableRow>
                         <TextView
-                            android:text="Urbanización:"
-                            android:textStyle="bold"/>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:text=""
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/urbanizacion_detalle"/>
-
-                        </LinearLayout>
-
-
-                    </TableRow>
-                    <TableRow>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:text="Lote: "
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:text="29903.23"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/lote_detalle"/>
-                            <TextView
-                                android:text=" Manzana: "
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:text=""
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/manzana_detalle"/>
-                        </LinearLayout>
-
-
-                    </TableRow>
-                    <TableRow>
-                        <TextView
                             android:text="Precio:"
                             android:textStyle="bold"/>
                         <LinearLayout
@@ -103,15 +55,14 @@
                     <TableRow>
                         <TextView android:text="Cliente:"
                             android:textStyle="bold"/>
-                        <TextView
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/cliente_detalle"
+                            android:id="@+id/cliente"
                             android:layout_span="2"
                             android:singleLine="true"
                             android:imeOptions="actionDone"
-                            android:maxLength="25"
-                            />
+                            android:maxLength="25" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -156,24 +107,27 @@
                                 android:textStyle="bold"
                                 android:textSize="15dp"
                                 android:textColor="@color/azul3"/>
-                            <TextView
-                                android:layout_width="100dp"
+                            <EditText
+                                android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/entradra_detalle"
+                                android:id="@+id/entradra"
+                                android:inputType="numberDecimal"
                                 android:textStyle="normal"
                                 android:maxLength="9"
-                                />
+                                android:textSize="14dp" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <EditText
                                 android:layout_width="50dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/porcentajeCuotaEntrada_detalle"
-                                android:maxLength="6"/>
+                                android:id="@+id/porcentajeCuotaEntrada"
+                                android:inputType="numberDecimal"
+                                android:maxLength="6"
+                                android:textSize="14dp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -188,7 +142,7 @@
                     <TableRow android:layout_height="wrap_content"
                         android:paddingBottom="5dp" android:paddingTop="15dp"
                         >
-                        <TextView android:text="Cuota Inicial:"
+                        <TextView android:text="Cuota Ini:"
                             android:textStyle="bold"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -201,26 +155,26 @@
                                 android:textStyle="bold"
                                 android:textSize="15dp"
                                 android:textColor="@color/azul3"/>
-                            <TextView
-                                android:layout_width="100dp"
+                            <EditText
+                                android:layout_width="75dp"
                                 android:layout_height="fill_parent"
-                                android:id="@+id/cuotaInicial_detalle"
+                                android:id="@+id/cuotaInicial"
+                                android:inputType="numberDecimal"
                                 android:layout_gravity="center_vertical"
-                                android:textStyle="normal"
-                                android:maxLength="9"/>
-
+                                android:textSize="14dp" />
 
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
+                            <EditText
                                 android:layout_width="50dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/porcentajeCuotaInicial_detalle"
+                                android:id="@+id/porcentajeCuotaInicial"
+                                android:inputType="numberDecimal"
                                 android:maxLength="6"
-                                />
+                                android:textSize="14dp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -234,16 +188,16 @@
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
                         android:paddingBottom="5dp" android:paddingTop="5dp">
-                        <TextView android:text="No. de Pagos:"
+                        <TextView android:text="No. Pagos:"
                             android:textStyle="bold"/>
-                        <TextView
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/numeroPagosEntrada_detalle"
+                            android:id="@+id/numeroPagosEntrada"
                             android:numeric="integer"
                             android:inputType="number"
                             android:maxLength="2"
-                            />
+                            android:textSize="14dp" />
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Cuota:"
@@ -321,18 +275,19 @@
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
                         android:paddingBottom="5dp" android:paddingTop="15dp">
-                        <TextView android:text="Tasa de Interes:"
+                        <TextView android:text="Tasa Int:"
                             android:textStyle="bold"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
+                            <EditText
                                 android:layout_width="50dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/tasaInteres_detalle"
+                                android:id="@+id/tasaInteres"
+                                android:inputType="numberDecimal"
                                 android:maxLength="2"
-                                />
+                                android:textSize="14dp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -345,14 +300,16 @@
                     </TableRow>
                     <TableRow android:layout_height="wrap_content"
                         android:paddingBottom="5dp" android:paddingTop="5dp">
-                        <TextView android:text="No. de Pagos:"
+                        <TextView android:text="No. Pagos:"
                             android:textStyle="bold"/>
-                        <TextView
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/numeroPagosSaldo_detalle"
+                            android:id="@+id/numeroPagosSaldo"
+                            android:numeric="integer"
+                            android:inputType="number"
                             android:maxLength="3"
-                            />
+                            android:textSize="14dp" />
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Valor de la cuota:"
@@ -378,7 +335,7 @@
                         </LinearLayout>
 
                     </TableRow>
-
+                    <TableRow></TableRow>
                 </TableLayout>
             </LinearLayout>
         </LinearLayout>

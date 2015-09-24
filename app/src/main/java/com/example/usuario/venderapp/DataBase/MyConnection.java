@@ -22,12 +22,12 @@ import java.util.logging.Logger;
  * Created by USUARIO on 28-abr-15.
  */
 public class MyConnection {
-    private final String SERVIDOR="192.168.1.163";
-    private final String PUERTO="20015";
+    private final String SERVIDOR="192.168.5.57";
+    private final String PUERTO="1433";
     private final String DB="MedusaEv";
-    private final String USER ="u_aminweb";
-    private final String PASSWORD = "U_Admin2014Web";
-    private final String INSTANCE_NAME = "medusa_webqa";
+    private final String USER ="sa_tablet";
+    private final String PASSWORD = "satablet2013";
+    private final String INSTANCE_NAME = "medusa_web";
     private final String URL = "jdbc:jtds:sqlserver://"+SERVIDOR+":"
             +PUERTO+";instanceName="+INSTANCE_NAME+";databaseName="
             +DB+";user="+USER+";password="+PASSWORD;
@@ -150,14 +150,17 @@ public class MyConnection {
 
         ResultSet rs=null;
 
-        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy where usuario='&PV_USER&' and"+
+        String q_proyectos=  "Select distinct codigo_proyecto,proyecto_libres from dbo.vw_user_proy " +
+                "where usuario='&PV_USER&' and"+
                 " codigo_urbanizacion='2';";
-        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion,area_terreno,plazo_entrada,plazo_entrega,vender_como "+
+        String q_lotes= "Select codigo_lote,codigo_proyecto,manzana,lote,estado_construccion," +
+                "area_terreno,plazo_entrada,plazo_entrega,vender_como "+
                 "from dbo.vw_lotes_app where codigo_urbanizacion='2'";
         String q_modelos = "Select * from dbo.vw_modelos_en_lot_app m "+
-                " inner join dbo.vw_lotes_app l on l.codigo_lote = m.codigo_lote AND l.vender_como='&PV_VENDER_COMO&'"+
+                " inner join dbo.vw_lotes_app l on l.codigo_lote = m.codigo_lote AND " +
+                "l.vender_como='&PV_VENDER_COMO&'"+
                 " where m.codigo_lote='&PV_LOTE&' and m.modelo'&PV_SOLAR&'";
-
+        String q_parametros= "select * from dbo.vw_parametros_app";
         try{
 
             rs=consulta(q_proyectos.replace("&PV_USER&", user));
@@ -170,6 +173,16 @@ public class MyConnection {
             }
             rs.close();
             rs=null;
+
+            DbParametros parametros=new DbParametros(context);
+            rs=consulta(q_parametros);
+            while (rs.next()) {
+                //insertar(String id,String id_curso,String nombre_curso,String titulo,String contenido,Date fecha,String num_msgs)
+                parametros.insertar(rs.getString(1),rs.getString(2),rs.getString(3));
+            }
+            rs.close();
+            rs=null;
+
             DbLote lote=new DbLote(context);
             DbModelo modelo=new DbModelo(context);
             rs=consulta(q_lotes);

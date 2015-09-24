@@ -210,7 +210,6 @@ public class LoginActivity extends Activity {
                         }
                     });
                     con.actualizarDatos(getApplicationContext(),usuario,progress);
-
                 }
                 else bool="false";
             }
@@ -248,8 +247,9 @@ public class LoginActivity extends Activity {
             mButton.setClickable(false);
             progressDoalog = new ProgressDialog(LoginActivity.this);
             progressDoalog.setMax(100);
-            progressDoalog.setMessage("Cargando urbanizaciones, lotes y modelos...");
-            progressDoalog.setTitle("Iniciando");
+            //progressDoalog.setMessage("Cargando urbanizaciones, lotes y modelos...");
+            progressDoalog.setMessage("Esperando para cargar la información");
+            progressDoalog.setTitle("Verificando");
             progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDoalog.setCanceledOnTouchOutside(false);
             progressDoalog.show();
@@ -264,7 +264,10 @@ public class LoginActivity extends Activity {
             //log_bool="true";
             if(log_bool.equalsIgnoreCase("true"));
 
-
+            /*if(log_bool.equals("true")){
+                progressDoalog.setMessage("Cargando urbanizaciones, lotes y modelos...");
+                progressDoalog.setTitle("Iniciando");
+            }*/
 
             for (int i = 0; i < 100; i++) {
                 if (!this.isCancelled()) {
@@ -294,7 +297,7 @@ public class LoginActivity extends Activity {
                 LoginActivity.this.mPassword.setError(getString(R.string.error_incorrect_password));
                 LoginActivity.this.mPassword.requestFocus();
             }
-
+            progressDoalog.dismiss();
             is_log=false;
         }
 

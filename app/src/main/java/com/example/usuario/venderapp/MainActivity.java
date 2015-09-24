@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.example.usuario.venderapp.DataBase.DbFinanciamiento;
 import com.example.usuario.venderapp.DataBase.DbHelper;
 import com.example.usuario.venderapp.DataBase.DbLote;
 import com.example.usuario.venderapp.DataBase.DbModelo;
+import com.example.usuario.venderapp.DataBase.DbParametros;
 import com.example.usuario.venderapp.DataBase.DbProyecto;
 import com.example.usuario.venderapp.DataBase.MyConnection;
 
@@ -37,9 +39,13 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     public FragmentTabHost tabHost;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
         setContentView(R.layout.activity_main);
         tabHost= (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabHost.setup(this,
@@ -53,8 +59,16 @@ public class MainActivity extends ActionBarActivity {
         final View tabView2 = tw.getChildTabViewAt(1);
         final TextView tv = (TextView)tabView1.findViewById(android.R.id.title);
         final TextView tv2 = (TextView)tabView2.findViewById(android.R.id.title);
-        tv2.setTextSize(20);
-        tv.setTextSize(20);
+
+        if(width<=500){
+            tv2.setTextSize(14);
+            tv.setTextSize(14);
+        }
+        else {
+            tv2.setTextSize(20);
+            tv.setTextSize(20);
+        }
+
         tv2.setTextColor(getResources().getColor(R.color.azul));
         tv.setTextColor(getResources().getColor(R.color.azul));
 
@@ -112,7 +126,8 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     public void borrarDatos() {
-
+        DbParametros dbParametros = new DbParametros(this);
+        dbParametros.vaciar();
         DbModelo dbModelo = new DbModelo(this);
         dbModelo.vaciar();
         DbLote dbLote = new DbLote(this);
@@ -128,8 +143,10 @@ public class MainActivity extends ActionBarActivity {
         if (appDir.exists()) {
             String[] children = appDir.list();
             for (String s : children) {
-                if (!s.equals("lib")&&s.contentEquals("Imagenes")) {
-                    deleteDir(new File(appDir, s));
+                if (!s.equals("lib")) {
+                    System.out.println(s.substring(0,3));
+                    if(s.substring(0,3).equals("app"))
+                        deleteDir(new File(appDir, s));
                     Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
                 }
             }

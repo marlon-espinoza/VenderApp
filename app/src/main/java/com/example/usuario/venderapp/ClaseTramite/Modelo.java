@@ -59,6 +59,7 @@ public class Modelo {
         this.manzana=manzana;
         this.id_lote=id_lote;
         this.vender_como=vender_como;
+        this.pisos=pisos;
     }
 
     public static String getId() {

@@ -64,9 +64,8 @@
                 android:layout_alignParentLeft="true"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:padding="2dp"
-                android:gravity="right"
                 android:text="Martha Salcedo"/>
 
         </RelativeLayout>
@@ -169,7 +168,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Cuota entrada: "
+                    android:text="C. Ent: "
                     android:textStyle="bold"
                     android:textSize="@dimen/abc_text_size_small_material"
                     />
@@ -187,10 +186,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Cuota saldo: "
+                    android:text="C. Sld: "
                     android:textStyle="bold"
-                    android:textSize="@dimen/abc_text_size_small_material"
-                    />
+                    android:textSize="@dimen/abc_text_size_small_material" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

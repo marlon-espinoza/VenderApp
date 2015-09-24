@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.usuario.venderapp.DataBase.DbParametros;
 import com.example.usuario.venderapp.R;
 import com.example.usuario.venderapp.Visor.SingleTouchImageViewActivity;
 import com.example.usuario.venderapp.Visor.ViewPagerActivity;
@@ -41,20 +43,23 @@ import java.util.List;
  * Created by USUARIO on 03-jun-15.
  */
 //    String url="http://200.93.200.156/sitio1/Imagenes/";
+//      Esta clase recibe el id de la urbanización para consultar en la tabla parámetros
+//      su correspondiente localización.
 
 public class ImagenModeloAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String[]>Lista;
     private ImageView mImageView;
     private String NOMBRE_MODELOS_FILE="ImagenesModelo";
-
+    String id_urb;
     String path=null;
     String id_modelo,nombre_modelo,imagen_modelo,tipo_imagen;
-    String url="http://200.93.200.156/sitio1/Imagenes/";
-    //String url="http://ciudadceleste.com/Apps/Images/";
-    public ImagenModeloAdapter(Context context, ArrayList<String[]> Lista) {
+    String url;
+    public ImagenModeloAdapter(Context context, ArrayList<String[]> Lista,String id_urb) {
         this.Lista=Lista;
         this.context=context;
+        this.id_urb=id_urb;
+
     }
 
     @Override
@@ -79,8 +84,21 @@ public class ImagenModeloAdapter extends BaseAdapter {
         nombre_modelo=data[1];
         imagen_modelo=data[2];
         tipo_imagen=data[3];
+
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.imagen_modelo_adapter,parent,false);
+        }
+        DbParametros dbParametros=null;
+        try{
+            dbParametros= new DbParametros(context);
+            Cursor dato = dbParametros.consultar("0");
+            if (dato.moveToFirst())
+                url = dato.getString(0);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }finally {
+            if(dbParametros!=null)
+                dbParametros.close();
         }
         mImageView=(ImageView)convertView.findViewById(R.id.imgModelo);
         convertView.findViewById(R.id.loading_spinner_modelo).setVisibility(View.GONE);
@@ -88,7 +106,11 @@ public class ImagenModeloAdapter extends BaseAdapter {
         if(path==null) {
             //mLoadingView.setVisibility(View.VISIBLE);
             CargarImagenes nT = new CargarImagenes(mImageView,tipo_imagen,convertView);
-            nT.execute(url + imagen_modelo);
+            System.out.println(url + imagen_modelo);
+            if(imagen_modelo!=null)
+            nT.execute(url + imagen_modelo.replace(" ","%20"));
+            else
+                nT.execute(url + imagen_modelo);
         }
 
 
@@ -219,22 +241,38 @@ public class ImagenModeloAdapter extends BaseAdapter {
         ContextWrapper cw = new ContextWrapper(context);
         File dirImages = cw.getDir(NOMBRE_MODELOS_FILE+nombre_modelo, Context.MODE_PRIVATE);
         File myPath = new File(dirImages, tipo_foto + ".png");
-        BufferedInputStream buf;
-        FileInputStream fis;
-        Bitmap bmp;
         try{
-            fis = new FileInputStream(myPath);
-            buf = new BufferedInputStream(fis);
-            bmp = BitmapFactory.decodeStream(buf);
-            imageView.setImageBitmap(bmp);
+            // decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            FileInputStream stream1 = new FileInputStream(myPath);
+            BitmapFactory.decodeStream(stream1, null, o);
+            stream1.close();
+
+            // Find the correct scale value. It should be the power of 2.
+            int width_tmp = o.outWidth, height_tmp = o.outHeight;
+            int scale = 1;
+            while (true) {
+                if (width_tmp / 2 < 200
+                        || height_tmp / 2 < 200)
+                    break;
+                width_tmp /= 2;
+                height_tmp /= 2;
+                scale *= 2;
+            }
+
+            // decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            FileInputStream stream2 = new FileInputStream(myPath);
+            Bitmap bitmap = BitmapFactory.decodeStream(stream2, null, o2);
+            stream2.close();
+            //bmp = BitmapFactory.decodeStream(buf);
+            imageView.setImageBitmap(bitmap);
             proceso=myPath.getAbsolutePath();
 
-            if (fis != null) {
-                fis.close();
-            }
-            if (buf != null) {
-                buf.close();
-            }
+
+
 
         }catch (FileNotFoundException ex){
 
@@ -258,5 +296,6 @@ public class ImagenModeloAdapter extends BaseAdapter {
         }
         return proceso;
     }
+
 
 }
